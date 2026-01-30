@@ -49,5 +49,10 @@ namespace SlavaMorozov.NoPollutionMod
         {
             return ChallengeModuleManager.GetActiveModule() is NoToiletsChallengeModule;
         }
+
+        internal static bool IsHundredDuplicantsChallengeActive()
+        {
+            return ChallengeModuleManager.GetActiveModule() is HundredDuplicantsChallengeModule;
+        }
     }
 }

@@ -73,13 +73,13 @@ msgstr "ДОСТИЖЕНИЯ"
 
 #. SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_TITLE
 msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_TITLE"
-msgid "No Pollution Mod"
-msgstr "No Pollution Mod"
+msgid "No Pollution Mod [UPDATED]"
+msgstr "No Pollution Mod [UPDATED]"
 
 #. SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_BODY
 msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_BODY"
-msgid "Mod loaded.\n(This is a test message)"
-msgstr "Мод загружен.\n(это тестовое сообщение)"
+msgid ">>> worktree: bf08d221 <<<"
+msgstr ">>> worktree: bf08d221 <<<"
 
 #. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NAME
 msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NAME"
@@ -110,6 +110,16 @@ msgstr "Цикл: ?"
 msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.ALL_ACHIEVEMENTS_REMAINING_CYCLES"
 msgid "Remaining cycles: {0}"
 msgstr "Осталось циклов: {0}"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.HUNDRED_DUPLICANTS_PROGRESS
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.HUNDRED_DUPLICANTS_PROGRESS"
+msgid "Duplicants: {0}/{1}"
+msgstr "Дубликанты: {0}/{1}"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.HUNDRED_DUPLICANTS_FAILED_TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.HUNDRED_DUPLICANTS_FAILED_TOOLTIP"
+msgid "Challenge failed: A duplicant has died"
+msgstr "Челлендж провален: Дубликант погиб"
 
 #. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NO_TOILETS_STATUS.NAME
 msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NO_TOILETS_STATUS.NAME"
@@ -220,6 +230,31 @@ msgstr "Все достижения получены.\nЛегенда колон
 msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.FAILURE"
 msgid "The cycle limit has passed.\nNot every achievement was secured in time."
 msgstr "Лимит циклов исчерпан.\nНе все достижения удалось получить вовремя."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.NAME
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.NAME"
+msgid "100 Duplicants"
+msgstr "100 дубликантов"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.TOOLTIP"
+msgid "Reach 100 duplicants without losing a single one.\nPrinting Pod automatically prints duplicants when recharged.\nIf any duplicant dies, the challenge fails."
+msgstr "Достигните 100 дубликантов без единой потери.\nPrinting Pod автоматически печатает дубликантов при полной зарядке.\nЕсли хотя бы один дубликант умирает, челлендж провален."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.START
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.START"
+msgid "Challenge active: 100 duplicants.\nThe Printing Pod will automatically print duplicants.\nKeep everyone alive to win."
+msgstr "Челлендж активен: 100 дубликантов.\nPrinting Pod будет автоматически печатать дубликантов.\nСохраните всех в живых, чтобы победить."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.COMPLETION
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.COMPLETION"
+msgid "100 duplicants reached without a single loss.\nThe colony thrives with perfect care and management."
+msgstr "100 дубликантов достигнуто без единой потери.\nКолония процветает благодаря идеальной заботе и управлению."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.FAILURE
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.HUNDRED_DUPLICANTS.FAILURE"
+msgid "A duplicant has died.\nThe challenge cannot continue."
+msgstr "Дубликант погиб.\nЧеллендж не может быть продолжен."
 
 #. SlavaMorozov.NoPollutionMod.STRINGS.DUPLICANTS.MODIFIERS.NOPOLLUTION_POLLUTED.NAME
 msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.DUPLICANTS.MODIFIERS.NOPOLLUTION_POLLUTED.NAME"

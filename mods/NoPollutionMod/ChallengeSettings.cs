@@ -338,6 +338,19 @@ namespace SlavaMorozov.NoPollutionMod
             KPlayerPrefs.Save();
         }
 
+        internal static void ClearChallengeFailed(string challengeId)
+        {
+            if (string.IsNullOrEmpty(challengeId) || challengeId == LevelNone)
+            {
+                return;
+            }
+
+            var key = GetFailureKey(challengeId);
+            KPlayerPrefs.SetInt(key, 0);
+            KPlayerPrefs.Save();
+            LogInfo($"ClearChallengeFailed: {challengeId}");
+        }
+
         internal static bool TryGetChallengeCompletionInfo(string challengeId, out string asteroidName, out int cycle)
         {
             asteroidName = null;

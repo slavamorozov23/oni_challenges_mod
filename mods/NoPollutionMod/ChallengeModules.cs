@@ -26,7 +26,8 @@ namespace SlavaMorozov.NoPollutionMod
             new NoPollutionChallengeModule(),
             new NoToiletsChallengeModule(),
             new OneDuplicantChallengeModule(),
-            new AllAchievementsChallengeModule()
+            new AllAchievementsChallengeModule(),
+            new HundredDuplicantsChallengeModule()
         };
 
         internal static IEnumerable<IChallengeModule> GetModules() => Modules;

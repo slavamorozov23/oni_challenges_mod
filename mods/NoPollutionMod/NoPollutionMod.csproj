@@ -85,6 +85,7 @@
     <Compile Include="Challenges\NoToiletsChallengeModule.cs" />
     <Compile Include="Challenges\OneDuplicantChallengeModule.cs" />
     <Compile Include="Challenges\AllAchievementsChallengeModule.cs" />
+    <Compile Include="Challenges\HundredDuplicantsChallengeModule.cs" />
     <Compile Include="DebugOptionsScreen.cs" />
     <Compile Include="DialogLogoInjector.cs" />
     <Compile Include="MainMenuPatch.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Challenges\Patches.NoPollution.cs" />
     <Compile Include="Challenges\Patches.NoToilets.cs" />
     <Compile Include="Challenges\Patches.OneDuplicant.cs" />
+    <Compile Include="Challenges\Patches.HundredDuplicants.cs" />
     <Compile Include="Patches.cs" />
     <Compile Include="Patches\ChallengeDialogs.cs" />
     <Compile Include="Patches\ColonyDestinationSelectScreenPatches.cs" />
@@ -109,6 +111,11 @@
     <Compile Include="Challenges\STRINGS.Duplicants.cs" />
     <Compile Include="Challenges\STRINGS.UI.cs" />
     <Compile Include="STRINGS.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="translations\*.po">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

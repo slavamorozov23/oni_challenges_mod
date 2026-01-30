@@ -10,6 +10,7 @@ namespace SlavaMorozov.NoPollutionMod
         public override void OnLoad(Harmony harmony)
         {
             Debug.Log("[NoPollutionMod] OnLoad ENTER");
+            Debug.Log($"[NoPollutionMod] BUILD bf08d221 | Assembly={Assembly.GetExecutingAssembly().Location}");
 
             ModLocalization.SetModPath(path);
             ModLocalization.RegisterStrings();

@@ -55,6 +55,12 @@ namespace SlavaMorozov.NoPollutionMod
                 UnityEngine.Object.DestroyImmediate(existingProgressTile.gameObject);
             }
 
+            var existingHundredDuplicantsProgressTile = row.Find("HundredDuplicantsProgressTile");
+            if (existingHundredDuplicantsProgressTile != null)
+            {
+                UnityEngine.Object.DestroyImmediate(existingHundredDuplicantsProgressTile.gameObject);
+            }
+
             if (!ChallengeSettings.IsChallengeActive())
             {
                 ModLog.Info("TopLeftControlScreen.OnActivate: challenge inactive");
@@ -104,6 +110,7 @@ namespace SlavaMorozov.NoPollutionMod
             TryAddWinButton(__instance, row);
             TryAddAchievementsButton(__instance, row);
             TryAddAllAchievementsProgressTile(__instance, row);
+            TryAddHundredDuplicantsProgressTile(__instance, row);
         }
 
         private static void TryAddWinButton(TopLeftControlScreen screen, RectTransform row)

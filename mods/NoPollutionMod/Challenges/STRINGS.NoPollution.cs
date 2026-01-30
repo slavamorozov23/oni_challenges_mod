@@ -13,6 +13,8 @@ namespace SlavaMorozov.NoPollutionMod
             public static LocString COMPLETION_CYCLE_UNKNOWN = "Cycle: ?";
             public static LocString COMPLETION_FALLBACK = "Challenge completed: {0}";
             public static LocString ALL_ACHIEVEMENTS_REMAINING_CYCLES = "Remaining cycles: {0}";
+            public static LocString HUNDRED_DUPLICANTS_PROGRESS = "Duplicants: {0}/{1}";
+            public static LocString HUNDRED_DUPLICANTS_FAILED_TOOLTIP = "Challenge failed: A duplicant has died";
 
             public class NO_TOILETS_STATUS
             {
@@ -90,6 +92,25 @@ namespace SlavaMorozov.NoPollutionMod
                     public static LocString FAILURE =
                         "The cycle limit has passed.\n" +
                         "Not every achievement was secured in time.";
+                }
+
+                public class HUNDRED_DUPLICANTS
+                {
+                    public static LocString NAME = "100 Duplicants";
+                    public static LocString TOOLTIP =
+                        "Reach 100 duplicants without losing a single one.\n" +
+                        "Printing Pod automatically prints duplicants when recharged.\n" +
+                        "If any duplicant dies, the challenge fails.";
+                    public static LocString START =
+                        "Challenge active: 100 duplicants.\n" +
+                        "The Printing Pod will automatically print duplicants.\n" +
+                        "Keep everyone alive to win.";
+                    public static LocString COMPLETION =
+                        "100 duplicants reached without a single loss.\n" +
+                        "The colony thrives with perfect care and management.";
+                    public static LocString FAILURE =
+                        "A duplicant has died.\n" +
+                        "The challenge cannot continue.";
                 }
             }
         }
