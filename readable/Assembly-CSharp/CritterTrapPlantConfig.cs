@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+using STRINGS;
+using TUNING;
+using UnityEngine;
+
+// Token: 0x0200018F RID: 399
+public class CritterTrapPlantConfig : IEntityConfig, IHasDlcRestrictions
+{
+	// Token: 0x060007B8 RID: 1976 RVA: 0x00034F3A File Offset: 0x0003313A
+	public string[] GetRequiredDlcIds()
+	{
+		return DlcManager.EXPANSION1;
+	}
+
+	// Token: 0x060007B9 RID: 1977 RVA: 0x00034F41 File Offset: 0x00033141
+	public string[] GetForbiddenDlcIds()
+	{
+		return null;
+	}
+
+	// Token: 0x060007BA RID: 1978 RVA: 0x00034F44 File Offset: 0x00033144
+	public GameObject CreatePrefab()
+	{
+		string id = "CritterTrapPlant";
+		string name = STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.NAME;
+		string desc = STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.DESC;
+		float mass = 4f;
+		EffectorValues tier = DECOR.BONUS.TIER1;
+		KAnimFile anim = Assets.GetAnim("venus_critter_trap_kanim");
+		string initialAnim = "idle_open";
+		Grid.SceneLayer sceneLayer = Grid.SceneLayer.BuildingBack;
+		int width = 1;
+		int height = 2;
+		EffectorValues decor = tier;
+		float freezing_ = TUNING.CREATURES.TEMPERATURE.FREEZING_3;
+		GameObject gameObject = EntityTemplates.CreatePlacedEntity(id, name, desc, mass, anim, initialAnim, sceneLayer, width, height, decor, default(EffectorValues), SimHashes.Creature, null, freezing_);
+		EntityTemplates.ExtendEntityToBasicPlant(gameObject, TUNING.CREATURES.TEMPERATURE.FREEZING_10, TUNING.CREATURES.TEMPERATURE.FREEZING_9, TUNING.CREATURES.TEMPERATURE.FREEZING, TUNING.CREATURES.TEMPERATURE.COOL, null, false, 0f, 0.15f, "PlantMeat", true, true, true, false, 2400f, 0f, 2200f, "CritterTrapPlantOriginal", STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.NAME);
+		UnityEngine.Object.DestroyImmediate(gameObject.GetComponent<MutantPlant>());
+		CritterTrapPlant critterTrapPlant = gameObject.AddOrGet<CritterTrapPlant>();
+		critterTrapPlant.CONSUMABLE_TAGs = CritterTrapPlantConfig.AllowedPreyTags;
+		critterTrapPlant.gasOutputRate = 0.041666668f;
+		critterTrapPlant.outputElement = SimHashes.Hydrogen;
+		critterTrapPlant.gasVentThreshold = 33.25f;
+		TrapTrigger trapTrigger = gameObject.AddOrGet<TrapTrigger>();
+		trapTrigger.trappableCreatures = CritterTrapPlantConfig.AllowedPreyTags;
+		trapTrigger.trappedOffset = new Vector2(0.5f, 0f);
+		trapTrigger.enabled = false;
+		gameObject.AddOrGet<LoopingSounds>();
+		gameObject.AddOrGet<Storage>();
+		Tag tag = ElementLoader.FindElementByHash(SimHashes.DirtyWater).tag;
+		EntityTemplates.ExtendPlantToIrrigated(gameObject, new PlantElementAbsorber.ConsumeInfo[]
+		{
+			new PlantElementAbsorber.ConsumeInfo
+			{
+				tag = tag,
+				massConsumptionRate = 0.016666668f
+			}
+		});
+		GameObject plant = gameObject;
+		SeedProducer.ProductionType productionType = SeedProducer.ProductionType.Hidden;
+		string id2 = "CritterTrapPlantSeed";
+		string name2 = STRINGS.CREATURES.SPECIES.SEEDS.CRITTERTRAPPLANT.NAME;
+		string desc2 = STRINGS.CREATURES.SPECIES.SEEDS.CRITTERTRAPPLANT.DESC;
+		KAnimFile anim2 = Assets.GetAnim("seed_critter_trap_kanim");
+		string initialAnim2 = "object";
+		int numberOfSeeds = 1;
+		List<Tag> list = new List<Tag>();
+		list.Add(GameTags.CropSeed);
+		SingleEntityReceptacle.ReceptacleDirection planterDirection = SingleEntityReceptacle.ReceptacleDirection.Top;
+		string domesticatedDescription = STRINGS.CREATURES.SPECIES.CRITTERTRAPPLANT.DOMESTICATEDDESC;
+		EntityTemplates.CreateAndRegisterPreviewForPlant(EntityTemplates.CreateAndRegisterSeedForPlant(plant, this, productionType, id2, name2, desc2, anim2, initialAnim2, numberOfSeeds, list, planterDirection, default(Tag), 21, domesticatedDescription, EntityTemplates.CollisionShape.CIRCLE, 0.3f, 0.3f, null, "", false), "CritterTrapPlant_preview", Assets.GetAnim("venus_critter_trap_kanim"), "place", 1, 2);
+		return gameObject;
+	}
+
+	// Token: 0x060007BB RID: 1979 RVA: 0x00035148 File Offset: 0x00033348
+	public void OnPrefabInit(GameObject inst)
+	{
+		CritterTrapPlant component = inst.GetComponent<CritterTrapPlant>();
+		inst.GetComponent<TrapTrigger>().customConditionsToTrap = new Func<GameObject, bool>(component.IsEntityEdible);
+	}
+
+	// Token: 0x060007BC RID: 1980 RVA: 0x00035174 File Offset: 0x00033374
+	public void OnSpawn(GameObject inst)
+	{
+	}
+
+	// Token: 0x040005DD RID: 1501
+	public const string ID = "CritterTrapPlant";
+
+	// Token: 0x040005DE RID: 1502
+	public const float WATER_RATE = 0.016666668f;
+
+	// Token: 0x040005DF RID: 1503
+	public const float GAS_RATE = 0.041666668f;
+
+	// Token: 0x040005E0 RID: 1504
+	public const float GAS_VENT_THRESHOLD = 33.25f;
+
+	// Token: 0x040005E1 RID: 1505
+	private static Tag[] AllowedPreyTags = new Tag[]
+	{
+		GameTags.Creatures.Walker,
+		GameTags.Creatures.Hoverer
+	};
+}

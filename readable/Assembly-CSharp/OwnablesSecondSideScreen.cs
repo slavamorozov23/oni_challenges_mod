@@ -1,0 +1,286 @@
+﻿using System;
+using System.Collections.Generic;
+using STRINGS;
+using UnityEngine;
+
+// Token: 0x02000E5A RID: 3674
+public class OwnablesSecondSideScreen : KScreen
+{
+	// Token: 0x1700080E RID: 2062
+	// (get) Token: 0x06007470 RID: 29808 RVA: 0x002C7131 File Offset: 0x002C5331
+	// (set) Token: 0x0600746F RID: 29807 RVA: 0x002C7128 File Offset: 0x002C5328
+	public AssignableSlotInstance Slot { get; private set; }
+
+	// Token: 0x1700080F RID: 2063
+	// (get) Token: 0x06007472 RID: 29810 RVA: 0x002C7142 File Offset: 0x002C5342
+	// (set) Token: 0x06007471 RID: 29809 RVA: 0x002C7139 File Offset: 0x002C5339
+	public IAssignableIdentity OwnerIdentity { get; private set; }
+
+	// Token: 0x17000810 RID: 2064
+	// (get) Token: 0x06007473 RID: 29811 RVA: 0x002C714A File Offset: 0x002C534A
+	public AssignableSlot SlotType
+	{
+		get
+		{
+			if (this.Slot != null)
+			{
+				return this.Slot.slot;
+			}
+			return null;
+		}
+	}
+
+	// Token: 0x17000811 RID: 2065
+	// (get) Token: 0x06007474 RID: 29812 RVA: 0x002C7161 File Offset: 0x002C5361
+	public Assignable CurrentSlotItem
+	{
+		get
+		{
+			if (!this.HasItem)
+			{
+				return null;
+			}
+			return this.Slot.assignable;
+		}
+	}
+
+	// Token: 0x17000812 RID: 2066
+	// (get) Token: 0x06007475 RID: 29813 RVA: 0x002C7178 File Offset: 0x002C5378
+	public bool HasItem
+	{
+		get
+		{
+			return this.Slot != null && this.Slot.IsAssigned();
+		}
+	}
+
+	// Token: 0x06007476 RID: 29814 RVA: 0x002C718F File Offset: 0x002C538F
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+		this.originalRow.gameObject.SetActive(false);
+		MultiToggle multiToggle = this.noneRow;
+		multiToggle.onClick = (System.Action)Delegate.Combine(multiToggle.onClick, new System.Action(this.OnNoneRowClicked));
+	}
+
+	// Token: 0x06007477 RID: 29815 RVA: 0x002C71CF File Offset: 0x002C53CF
+	private void OnNoneRowClicked()
+	{
+		this.UnassignCurrentItem();
+		this.RefreshNoneRow();
+	}
+
+	// Token: 0x06007478 RID: 29816 RVA: 0x002C71DD File Offset: 0x002C53DD
+	protected override void OnCmpDisable()
+	{
+		this.SetSlot(null);
+		base.OnCmpDisable();
+	}
+
+	// Token: 0x06007479 RID: 29817 RVA: 0x002C71EC File Offset: 0x002C53EC
+	public void SetSlot(AssignableSlotInstance slot)
+	{
+		Components.AssignableItems.Unregister(new Action<Assignable>(this.OnNewItemAvailable), new Action<Assignable>(this.OnItemUnregistered));
+		this.Slot = slot;
+		this.OwnerIdentity = ((slot == null) ? null : slot.assignables.GetComponent<IAssignableIdentity>());
+		if (this.Slot != null)
+		{
+			Components.AssignableItems.Register(new Action<Assignable>(this.OnNewItemAvailable), new Action<Assignable>(this.OnItemUnregistered));
+		}
+		this.RefreshItemListOptions(true);
+	}
+
+	// Token: 0x0600747A RID: 29818 RVA: 0x002C726C File Offset: 0x002C546C
+	public void SortRows()
+	{
+		if (this.itemRows != null)
+		{
+			this.itemRows.Sort((OwnablesSecondSideScreenRow a, OwnablesSecondSideScreenRow b) => string.Compare(UI.StripLinkFormatting(a.nameLabel.text), UI.StripLinkFormatting(b.nameLabel.text)) * -1);
+			OwnablesSecondSideScreenRow ownablesSecondSideScreenRow = null;
+			for (int i = 0; i < this.itemRows.Count; i++)
+			{
+				OwnablesSecondSideScreenRow ownablesSecondSideScreenRow2 = this.itemRows[i];
+				if (ownablesSecondSideScreenRow2.item == null || ownablesSecondSideScreenRow2.item.IsAssigned())
+				{
+					if (ownablesSecondSideScreenRow == null && ownablesSecondSideScreenRow2 != null && ownablesSecondSideScreenRow2.item != null && ownablesSecondSideScreenRow2.item.IsAssigned() && ownablesSecondSideScreenRow2.item == this.CurrentSlotItem)
+					{
+						ownablesSecondSideScreenRow = ownablesSecondSideScreenRow2;
+					}
+					else
+					{
+						ownablesSecondSideScreenRow2.transform.SetAsLastSibling();
+					}
+				}
+				else
+				{
+					ownablesSecondSideScreenRow2.transform.SetAsFirstSibling();
+				}
+			}
+			if (ownablesSecondSideScreenRow != null)
+			{
+				ownablesSecondSideScreenRow.transform.SetAsFirstSibling();
+			}
+		}
+		this.noneRow.transform.SetAsFirstSibling();
+	}
+
+	// Token: 0x0600747B RID: 29819 RVA: 0x002C7374 File Offset: 0x002C5574
+	public void RefreshItemListOptions(bool sortRows = false)
+	{
+		GameObject gameObject = (this.OwnerIdentity == null) ? null : this.OwnerIdentity.GetOwners()[0].GetComponent<MinionAssignablesProxy>().GetTargetGameObject();
+		int worldID = (this.OwnerIdentity == null) ? 255 : gameObject.GetMyWorldId();
+		List<Assignable> list = null;
+		int b = 0;
+		bool showItemsAssignedToOthers = true;
+		if (this.Slot != null && (this.Slot is EquipmentSlotInstance || this.Slot.ID.Contains("BionicUpgrade")))
+		{
+			showItemsAssignedToOthers = false;
+		}
+		if (worldID != 255)
+		{
+			list = Components.AssignableItems.Items.FindAll(delegate(Assignable i)
+			{
+				bool flag = i.slotID == this.SlotType.Id && i.CanAssignTo(this.OwnerIdentity);
+				if (flag && i is Equippable)
+				{
+					Equippable equippable = i as Equippable;
+					GameObject gameObject2 = equippable.gameObject;
+					if (equippable.isEquipped)
+					{
+						gameObject2 = equippable.assignee.GetOwners()[0].GetComponent<MinionAssignablesProxy>().GetTargetGameObject();
+					}
+					flag = (flag && gameObject2.GetMyWorldId() == worldID);
+				}
+				bool flag2 = i.assignee != null && i.assignee.GetSoleOwner() == this.OwnerIdentity.GetSoleOwner();
+				bool flag3 = flag2 && this.Slot.assignable == i;
+				if (!showItemsAssignedToOthers)
+				{
+					if (i.assignee != null && !flag2)
+					{
+						flag = false;
+					}
+					if (flag2 && !flag3)
+					{
+						flag = false;
+					}
+				}
+				return flag;
+			});
+			b = list.Count;
+		}
+		for (int j = 0; j < Mathf.Max(this.itemRows.Count, b); j++)
+		{
+			if (list != null && j < list.Count)
+			{
+				Assignable assignable = list[j];
+				if (j >= this.itemRows.Count)
+				{
+					OwnablesSecondSideScreenRow item = this.CreateItemRow(assignable);
+					this.itemRows.Add(item);
+				}
+				OwnablesSecondSideScreenRow ownablesSecondSideScreenRow = this.itemRows[j];
+				ownablesSecondSideScreenRow.gameObject.SetActive(true);
+				ownablesSecondSideScreenRow.SetData(this.Slot, assignable);
+			}
+			else
+			{
+				OwnablesSecondSideScreenRow ownablesSecondSideScreenRow2 = this.itemRows[j];
+				ownablesSecondSideScreenRow2.ClearData();
+				ownablesSecondSideScreenRow2.gameObject.SetActive(false);
+			}
+		}
+		if (sortRows)
+		{
+			this.SortRows();
+		}
+		this.RefreshNoneRow();
+	}
+
+	// Token: 0x0600747C RID: 29820 RVA: 0x002C74F8 File Offset: 0x002C56F8
+	private void RefreshNoneRow()
+	{
+		this.noneRow.ChangeState(this.HasItem ? 0 : 1);
+	}
+
+	// Token: 0x0600747D RID: 29821 RVA: 0x002C7514 File Offset: 0x002C5714
+	private OwnablesSecondSideScreenRow CreateItemRow(Assignable item)
+	{
+		OwnablesSecondSideScreenRow component = Util.KInstantiateUI(this.originalRow.gameObject, this.originalRow.transform.parent.gameObject, false).GetComponent<OwnablesSecondSideScreenRow>();
+		component.OnRowClicked = (Action<OwnablesSecondSideScreenRow>)Delegate.Combine(component.OnRowClicked, new Action<OwnablesSecondSideScreenRow>(this.OnItemRowClicked));
+		component.OnRowItemAssigneeChanged = (Action<OwnablesSecondSideScreenRow>)Delegate.Combine(component.OnRowItemAssigneeChanged, new Action<OwnablesSecondSideScreenRow>(this.OnItemRowAsigneeChanged));
+		component.OnRowItemDestroyed = (Action<OwnablesSecondSideScreenRow>)Delegate.Combine(component.OnRowItemDestroyed, new Action<OwnablesSecondSideScreenRow>(this.OnItemDestroyed));
+		return component;
+	}
+
+	// Token: 0x0600747E RID: 29822 RVA: 0x002C75B2 File Offset: 0x002C57B2
+	private void OnItemDestroyed(OwnablesSecondSideScreenRow correspondingItemRow)
+	{
+		correspondingItemRow.ClearData();
+		correspondingItemRow.gameObject.SetActive(false);
+	}
+
+	// Token: 0x0600747F RID: 29823 RVA: 0x002C75C6 File Offset: 0x002C57C6
+	private void OnItemRowAsigneeChanged(OwnablesSecondSideScreenRow correspondingItemRow)
+	{
+		correspondingItemRow.Refresh();
+		this.RefreshNoneRow();
+	}
+
+	// Token: 0x06007480 RID: 29824 RVA: 0x002C75D4 File Offset: 0x002C57D4
+	private void OnItemRowClicked(OwnablesSecondSideScreenRow rowClicked)
+	{
+		Assignable item = rowClicked.item;
+		bool flag = item.IsAssigned() && item.assignee is AssignmentGroup;
+		bool flag2 = item.IsAssigned() && item.IsAssignedTo(this.OwnerIdentity) && !flag && this.Slot.IsAssigned() && this.Slot.assignable == item;
+		if (item.IsAssigned())
+		{
+			item.Unassign();
+		}
+		if (!flag2)
+		{
+			item.Assign(this.OwnerIdentity, this.Slot);
+		}
+		rowClicked.Refresh();
+		this.RefreshNoneRow();
+	}
+
+	// Token: 0x06007481 RID: 29825 RVA: 0x002C766A File Offset: 0x002C586A
+	private void UnassignCurrentItem()
+	{
+		if (this.Slot != null)
+		{
+			this.Slot.Unassign(true);
+			this.RefreshItemListOptions(false);
+		}
+	}
+
+	// Token: 0x06007482 RID: 29826 RVA: 0x002C7687 File Offset: 0x002C5887
+	private void OnNewItemAvailable(Assignable item)
+	{
+		if (this.Slot != null && item.slotID == this.SlotType.Id)
+		{
+			this.RefreshItemListOptions(false);
+		}
+	}
+
+	// Token: 0x06007483 RID: 29827 RVA: 0x002C76B0 File Offset: 0x002C58B0
+	private void OnItemUnregistered(Assignable item)
+	{
+		if (this.Slot != null && item.slotID == this.SlotType.Id)
+		{
+			this.RefreshItemListOptions(false);
+		}
+	}
+
+	// Token: 0x0400507F RID: 20607
+	public MultiToggle noneRow;
+
+	// Token: 0x04005080 RID: 20608
+	public OwnablesSecondSideScreenRow originalRow;
+
+	// Token: 0x04005083 RID: 20611
+	public System.Action OnScreenDeactivated;
+
+	// Token: 0x04005084 RID: 20612
+	private List<OwnablesSecondSideScreenRow> itemRows = new List<OwnablesSecondSideScreenRow>();
+}

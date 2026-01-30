@@ -1,0 +1,52 @@
+﻿using System;
+using STRINGS;
+using TUNING;
+using UnityEngine;
+
+// Token: 0x020001CC RID: 460
+public class FlowerVaseWallConfig : IBuildingConfig
+{
+	// Token: 0x06000954 RID: 2388 RVA: 0x0003E780 File Offset: 0x0003C980
+	public override BuildingDef CreateBuildingDef()
+	{
+		string id = "FlowerVaseWall";
+		int width = 1;
+		int height = 1;
+		string anim = "flowervase_wall_kanim";
+		int hitpoints = 10;
+		float construction_time = 10f;
+		float[] tier = TUNING.BUILDINGS.CONSTRUCTION_MASS_KG.TIER1;
+		string[] raw_METALS = MATERIALS.RAW_METALS;
+		float melting_point = 800f;
+		BuildLocationRule build_location_rule = BuildLocationRule.OnWall;
+		EffectorValues none = NOISE_POLLUTION.NONE;
+		BuildingDef buildingDef = BuildingTemplates.CreateBuildingDef(id, width, height, anim, hitpoints, construction_time, tier, raw_METALS, melting_point, build_location_rule, TUNING.BUILDINGS.DECOR.NONE, none, 0.2f);
+		buildingDef.Floodable = false;
+		buildingDef.Overheatable = false;
+		buildingDef.ViewMode = OverlayModes.Decor.ID;
+		buildingDef.AudioCategory = "Glass";
+		buildingDef.AudioSize = "large";
+		buildingDef.PermittedRotations = PermittedRotations.FlipH;
+		buildingDef.AddSearchTerms(SEARCH_TERMS.MORALE);
+		return buildingDef;
+	}
+
+	// Token: 0x06000955 RID: 2389 RVA: 0x0003E80C File Offset: 0x0003CA0C
+	public override void ConfigureBuildingTemplate(GameObject go, Tag prefab_tag)
+	{
+		go.AddOrGet<Storage>();
+		Prioritizable.AddRef(go);
+		PlantablePlot plantablePlot = go.AddOrGet<PlantablePlot>();
+		plantablePlot.AddDepositTag(GameTags.DecorSeed);
+		plantablePlot.occupyingObjectVisualOffset = new Vector3(0f, -0.25f, 0f);
+		go.GetComponent<KPrefabID>().AddTag(GameTags.Decoration, false);
+	}
+
+	// Token: 0x06000956 RID: 2390 RVA: 0x0003E861 File Offset: 0x0003CA61
+	public override void DoPostConfigureComplete(GameObject go)
+	{
+	}
+
+	// Token: 0x040006F4 RID: 1780
+	public const string ID = "FlowerVaseWall";
+}

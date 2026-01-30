@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\SlavaMorozov\\Documents\\ONI-Modding\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B1E33A5F-2F51-49B9-842C-1D0B5B61D300}|mods\\NoPollutionMod\\NoPollutionMod.csproj|c:\\users\\slavamorozov\\documents\\oni-modding\\mods\\nopollutionmod\\patches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B1E33A5F-2F51-49B9-842C-1D0B5B61D300}|mods\\NoPollutionMod\\NoPollutionMod.csproj|solutionrelative:mods\\nopollutionmod\\patches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Patches.cs",
+              "DocumentMoniker": "C:\\Users\\SlavaMorozov\\Documents\\ONI-Modding\\mods\\NoPollutionMod\\Patches.cs",
+              "RelativeDocumentMoniker": "mods\\NoPollutionMod\\Patches.cs",
+              "ToolTip": "C:\\Users\\SlavaMorozov\\Documents\\ONI-Modding\\mods\\NoPollutionMod\\Patches.cs",
+              "RelativeToolTip": "mods\\NoPollutionMod\\Patches.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T12:53:35.206Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

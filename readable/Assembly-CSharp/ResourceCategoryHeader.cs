@@ -1,0 +1,396 @@
+﻿using System;
+using System.Collections.Generic;
+using STRINGS;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+// Token: 0x02000DF2 RID: 3570
+[AddComponentMenu("KMonoBehaviour/scripts/ResourceCategoryHeader")]
+public class ResourceCategoryHeader : KMonoBehaviour, IPointerEnterHandler, IEventSystemHandler, IPointerExitHandler, ISim4000ms
+{
+	// Token: 0x060070A4 RID: 28836 RVA: 0x002AE56C File Offset: 0x002AC76C
+	protected override void OnPrefabInit()
+	{
+		base.OnPrefabInit();
+		this.EntryContainer.SetParent(base.transform.parent);
+		this.EntryContainer.SetSiblingIndex(base.transform.GetSiblingIndex() + 1);
+		this.EntryContainer.localScale = Vector3.one;
+		this.mButton = base.GetComponent<Button>();
+		this.mButton.onClick.AddListener(delegate()
+		{
+			this.ToggleOpen(true);
+		});
+		this.SetInteractable(this.anyDiscovered);
+		this.SetActiveColor(false);
+	}
+
+	// Token: 0x060070A5 RID: 28837 RVA: 0x002AE5F8 File Offset: 0x002AC7F8
+	protected override void OnSpawn()
+	{
+		base.OnSpawn();
+		this.tooltip.OnToolTip = new Func<string>(this.OnTooltip);
+		this.UpdateContents();
+		this.RefreshChart();
+	}
+
+	// Token: 0x060070A6 RID: 28838 RVA: 0x002AE623 File Offset: 0x002AC823
+	private void SetInteractable(bool state)
+	{
+		if (!state)
+		{
+			this.SetOpen(false);
+			this.expandArrow.SetDisabled();
+			return;
+		}
+		if (!this.IsOpen)
+		{
+			this.expandArrow.SetInactive();
+			return;
+		}
+		this.expandArrow.SetActive();
+	}
+
+	// Token: 0x060070A7 RID: 28839 RVA: 0x002AE65C File Offset: 0x002AC85C
+	private void SetActiveColor(bool state)
+	{
+		if (state)
+		{
+			this.elements.QuantityText.color = this.TextColor_Interactable;
+			this.elements.LabelText.color = this.TextColor_Interactable;
+			this.expandArrow.ActiveColour = this.TextColor_Interactable;
+			this.expandArrow.InactiveColour = this.TextColor_Interactable;
+			this.expandArrow.TargetImage.color = this.TextColor_Interactable;
+			return;
+		}
+		this.elements.LabelText.color = this.TextColor_NonInteractable;
+		this.elements.QuantityText.color = this.TextColor_NonInteractable;
+		this.expandArrow.ActiveColour = this.TextColor_NonInteractable;
+		this.expandArrow.InactiveColour = this.TextColor_NonInteractable;
+		this.expandArrow.TargetImage.color = this.TextColor_NonInteractable;
+	}
+
+	// Token: 0x060070A8 RID: 28840 RVA: 0x002AE738 File Offset: 0x002AC938
+	public void SetTag(Tag t, GameUtil.MeasureUnit measure)
+	{
+		this.ResourceCategoryTag = t;
+		this.Measure = measure;
+		this.elements.LabelText.text = t.ProperName();
+		if (SaveGame.Instance.expandedResourceTags.Contains(this.ResourceCategoryTag))
+		{
+			this.anyDiscovered = true;
+			this.ToggleOpen(false);
+		}
+	}
+
+	// Token: 0x060070A9 RID: 28841 RVA: 0x002AE790 File Offset: 0x002AC990
+	private void ToggleOpen(bool play_sound)
+	{
+		if (!this.anyDiscovered)
+		{
+			if (play_sound)
+			{
+				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("Negative", false));
+			}
+			return;
+		}
+		if (!this.IsOpen)
+		{
+			if (play_sound)
+			{
+				KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Click_Open", false));
+			}
+			this.SetOpen(true);
+			this.elements.LabelText.fontSize = (float)this.maximizedFontSize;
+			this.elements.QuantityText.fontSize = (float)this.maximizedFontSize;
+			return;
+		}
+		if (play_sound)
+		{
+			KMonoBehaviour.PlaySound(GlobalAssets.GetSound("HUD_Click_Close", false));
+		}
+		this.SetOpen(false);
+		this.elements.LabelText.fontSize = (float)this.minimizedFontSize;
+		this.elements.QuantityText.fontSize = (float)this.minimizedFontSize;
+	}
+
+	// Token: 0x060070AA RID: 28842 RVA: 0x002AE854 File Offset: 0x002ACA54
+	private void Hover(bool is_hovering)
+	{
+		this.Background.color = (is_hovering ? this.BackgroundHoverColor : new Color(0f, 0f, 0f, 0f));
+		ICollection<Pickupable> collection = null;
+		if (ClusterManager.Instance.activeWorld.worldInventory != null)
+		{
+			collection = ClusterManager.Instance.activeWorld.worldInventory.GetPickupables(this.ResourceCategoryTag, false);
+		}
+		if (collection == null)
+		{
+			return;
+		}
+		foreach (Pickupable pickupable in collection)
+		{
+			if (!(pickupable == null))
+			{
+				KAnimControllerBase component = pickupable.GetComponent<KAnimControllerBase>();
+				if (!(component == null))
+				{
+					component.HighlightColour = (is_hovering ? this.highlightColour : Color.black);
+				}
+			}
+		}
+	}
+
+	// Token: 0x060070AB RID: 28843 RVA: 0x002AE934 File Offset: 0x002ACB34
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		this.Hover(true);
+	}
+
+	// Token: 0x060070AC RID: 28844 RVA: 0x002AE93D File Offset: 0x002ACB3D
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		this.Hover(false);
+	}
+
+	// Token: 0x060070AD RID: 28845 RVA: 0x002AE948 File Offset: 0x002ACB48
+	public void SetOpen(bool open)
+	{
+		this.IsOpen = open;
+		if (open)
+		{
+			this.expandArrow.SetActive();
+			if (!SaveGame.Instance.expandedResourceTags.Contains(this.ResourceCategoryTag))
+			{
+				SaveGame.Instance.expandedResourceTags.Add(this.ResourceCategoryTag);
+			}
+		}
+		else
+		{
+			this.expandArrow.SetInactive();
+			SaveGame.Instance.expandedResourceTags.Remove(this.ResourceCategoryTag);
+		}
+		this.EntryContainer.gameObject.SetActive(this.IsOpen);
+	}
+
+	// Token: 0x060070AE RID: 28846 RVA: 0x002AE9D0 File Offset: 0x002ACBD0
+	private void GetAmounts(bool doExtras, out float available, out float total, out float reserved)
+	{
+		available = 0f;
+		total = 0f;
+		reserved = 0f;
+		HashSet<Tag> hashSet = null;
+		if (!DiscoveredResources.Instance.TryGetDiscoveredResourcesFromTag(this.ResourceCategoryTag, out hashSet))
+		{
+			return;
+		}
+		ListPool<Tag, ResourceCategoryHeader>.PooledList pooledList = ListPool<Tag, ResourceCategoryHeader>.Allocate();
+		foreach (Tag tag in hashSet)
+		{
+			EdiblesManager.FoodInfo foodInfo = null;
+			if (this.Measure == GameUtil.MeasureUnit.kcal)
+			{
+				foodInfo = EdiblesManager.GetFoodInfo(tag.Name);
+				if (foodInfo == null)
+				{
+					pooledList.Add(tag);
+					continue;
+				}
+			}
+			this.anyDiscovered = true;
+			ResourceEntry resourceEntry = null;
+			if (!this.ResourcesDiscovered.TryGetValue(tag, out resourceEntry))
+			{
+				resourceEntry = this.NewResourceEntry(tag, this.Measure);
+				this.ResourcesDiscovered.Add(tag, resourceEntry);
+			}
+			float num;
+			float num2;
+			float num3;
+			resourceEntry.GetAmounts(foodInfo, doExtras, out num, out num2, out num3);
+			available += num;
+			total += num2;
+			reserved += num3;
+		}
+		foreach (Tag item in pooledList)
+		{
+			hashSet.Remove(item);
+		}
+		pooledList.Recycle();
+	}
+
+	// Token: 0x060070AF RID: 28847 RVA: 0x002AEB1C File Offset: 0x002ACD1C
+	public void UpdateContents()
+	{
+		float num;
+		float num2;
+		float num3;
+		this.GetAmounts(false, out num, out num2, out num3);
+		if (num != this.cachedAvailable || num2 != this.cachedTotal || num3 != this.cachedReserved)
+		{
+			if (this.quantityString == null || this.currentQuantity != num)
+			{
+				switch (this.Measure)
+				{
+				case GameUtil.MeasureUnit.mass:
+					this.quantityString = GameUtil.GetFormattedMass(num, GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.UseThreshold, true, "{0:0.#}");
+					break;
+				case GameUtil.MeasureUnit.kcal:
+					this.quantityString = GameUtil.GetFormattedCalories(num, GameUtil.TimeSlice.None, true);
+					break;
+				case GameUtil.MeasureUnit.quantity:
+					this.quantityString = num.ToString();
+					break;
+				}
+				this.elements.QuantityText.text = this.quantityString;
+				this.currentQuantity = num;
+			}
+			this.cachedAvailable = num;
+			this.cachedTotal = num2;
+			this.cachedReserved = num3;
+		}
+		foreach (KeyValuePair<Tag, ResourceEntry> keyValuePair in this.ResourcesDiscovered)
+		{
+			keyValuePair.Value.UpdateValue();
+		}
+		this.SetActiveColor(num > 0f);
+		this.SetInteractable(this.anyDiscovered);
+	}
+
+	// Token: 0x060070B0 RID: 28848 RVA: 0x002AEC4C File Offset: 0x002ACE4C
+	private string OnTooltip()
+	{
+		float quantity;
+		float quantity2;
+		float quantity3;
+		this.GetAmounts(true, out quantity, out quantity2, out quantity3);
+		string text = this.elements.LabelText.text + "\n";
+		text += string.Format(UI.RESOURCESCREEN.AVAILABLE_TOOLTIP, ResourceCategoryScreen.QuantityTextForMeasure(quantity, this.Measure), ResourceCategoryScreen.QuantityTextForMeasure(quantity3, this.Measure), ResourceCategoryScreen.QuantityTextForMeasure(quantity2, this.Measure));
+		float delta = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, this.ResourceCategoryTag).GetDelta(150f);
+		if (delta != 0f)
+		{
+			text = text + "\n\n" + string.Format(UI.RESOURCESCREEN.TREND_TOOLTIP, (delta > 0f) ? UI.RESOURCESCREEN.INCREASING_STR : UI.RESOURCESCREEN.DECREASING_STR, GameUtil.GetFormattedMass(Mathf.Abs(delta), GameUtil.TimeSlice.None, GameUtil.MetricMassFormat.UseThreshold, true, "{0:0.#}"));
+		}
+		else
+		{
+			text = text + "\n\n" + UI.RESOURCESCREEN.TREND_TOOLTIP_NO_CHANGE;
+		}
+		return text;
+	}
+
+	// Token: 0x060070B1 RID: 28849 RVA: 0x002AED47 File Offset: 0x002ACF47
+	private ResourceEntry NewResourceEntry(Tag resourceTag, GameUtil.MeasureUnit measure)
+	{
+		ResourceEntry component = Util.KInstantiateUI(this.Prefab_ResourceEntry, this.EntryContainer.gameObject, true).GetComponent<ResourceEntry>();
+		component.SetTag(resourceTag, measure);
+		return component;
+	}
+
+	// Token: 0x060070B2 RID: 28850 RVA: 0x002AED6D File Offset: 0x002ACF6D
+	public void Sim4000ms(float dt)
+	{
+		this.RefreshChart();
+	}
+
+	// Token: 0x060070B3 RID: 28851 RVA: 0x002AED78 File Offset: 0x002ACF78
+	private void RefreshChart()
+	{
+		if (this.sparkChart != null)
+		{
+			ResourceTracker resourceStatistic = TrackerTool.Instance.GetResourceStatistic(ClusterManager.Instance.activeWorldId, this.ResourceCategoryTag);
+			this.sparkChart.GetComponentInChildren<LineLayer>().RefreshLine(resourceStatistic.ChartableData(3000f), "resourceAmount");
+			this.sparkChart.GetComponentInChildren<SparkLayer>().SetColor(Constants.NEUTRAL_COLOR);
+		}
+	}
+
+	// Token: 0x04004D94 RID: 19860
+	public GameObject Prefab_ResourceEntry;
+
+	// Token: 0x04004D95 RID: 19861
+	public Transform EntryContainer;
+
+	// Token: 0x04004D96 RID: 19862
+	public Tag ResourceCategoryTag;
+
+	// Token: 0x04004D97 RID: 19863
+	public GameUtil.MeasureUnit Measure;
+
+	// Token: 0x04004D98 RID: 19864
+	public bool IsOpen;
+
+	// Token: 0x04004D99 RID: 19865
+	public ImageToggleState expandArrow;
+
+	// Token: 0x04004D9A RID: 19866
+	private Button mButton;
+
+	// Token: 0x04004D9B RID: 19867
+	public Dictionary<Tag, ResourceEntry> ResourcesDiscovered = new Dictionary<Tag, ResourceEntry>();
+
+	// Token: 0x04004D9C RID: 19868
+	public ResourceCategoryHeader.ElementReferences elements;
+
+	// Token: 0x04004D9D RID: 19869
+	public Color TextColor_Interactable;
+
+	// Token: 0x04004D9E RID: 19870
+	public Color TextColor_NonInteractable;
+
+	// Token: 0x04004D9F RID: 19871
+	private string quantityString;
+
+	// Token: 0x04004DA0 RID: 19872
+	private float currentQuantity;
+
+	// Token: 0x04004DA1 RID: 19873
+	private bool anyDiscovered;
+
+	// Token: 0x04004DA2 RID: 19874
+	public const float chartHistoryLength = 3000f;
+
+	// Token: 0x04004DA3 RID: 19875
+	[MyCmpGet]
+	private ToolTip tooltip;
+
+	// Token: 0x04004DA4 RID: 19876
+	[SerializeField]
+	private int minimizedFontSize;
+
+	// Token: 0x04004DA5 RID: 19877
+	[SerializeField]
+	private int maximizedFontSize;
+
+	// Token: 0x04004DA6 RID: 19878
+	[SerializeField]
+	private Color highlightColour;
+
+	// Token: 0x04004DA7 RID: 19879
+	[SerializeField]
+	private Color BackgroundHoverColor;
+
+	// Token: 0x04004DA8 RID: 19880
+	[SerializeField]
+	private Image Background;
+
+	// Token: 0x04004DA9 RID: 19881
+	public GameObject sparkChart;
+
+	// Token: 0x04004DAA RID: 19882
+	private float cachedAvailable = float.MinValue;
+
+	// Token: 0x04004DAB RID: 19883
+	private float cachedTotal = float.MinValue;
+
+	// Token: 0x04004DAC RID: 19884
+	private float cachedReserved = float.MinValue;
+
+	// Token: 0x02002065 RID: 8293
+	[Serializable]
+	public struct ElementReferences
+	{
+		// Token: 0x040095EA RID: 38378
+		public LocText LabelText;
+
+		// Token: 0x040095EB RID: 38379
+		public LocText QuantityText;
+	}
+}

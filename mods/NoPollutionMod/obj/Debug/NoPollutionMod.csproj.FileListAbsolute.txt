@@ -1,0 +1,6 @@
+C:\Users\SlavaMorozov\Documents\Klei\OxygenNotIncluded\mods\local\nopollution_mod\NoPollutionMod.dll
+C:\Users\SlavaMorozov\Documents\Klei\OxygenNotIncluded\mods\local\nopollution_mod\NoPollutionMod.pdb
+C:\Users\SlavaMorozov\Documents\ONI-Modding\mods\NoPollutionMod\obj\Debug\NoPollutionMod.csproj.AssemblyReference.cache
+C:\Users\SlavaMorozov\Documents\ONI-Modding\mods\NoPollutionMod\obj\Debug\NoPollutionMod.csproj.CoreCompileInputs.cache
+C:\Users\SlavaMorozov\Documents\ONI-Modding\mods\NoPollutionMod\obj\Debug\NoPollutionMod.dll
+C:\Users\SlavaMorozov\Documents\ONI-Modding\mods\NoPollutionMod\obj\Debug\NoPollutionMod.pdb

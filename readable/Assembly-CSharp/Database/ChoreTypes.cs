@@ -1,0 +1,1178 @@
+﻿using System;
+using STRINGS;
+
+namespace Database
+{
+	// Token: 0x02000F2D RID: 3885
+	public class ChoreTypes : ResourceSet<ChoreType>
+	{
+		// Token: 0x06007C3D RID: 31805 RVA: 0x00309924 File Offset: 0x00307B24
+		public ChoreType GetByHash(HashedString id_hash)
+		{
+			for (int i = 0; i < this.resources.Count; i++)
+			{
+				if (this.resources[i].IdHash == id_hash)
+				{
+					return this.resources[i];
+				}
+			}
+			return null;
+		}
+
+		// Token: 0x06007C3E RID: 31806 RVA: 0x00309970 File Offset: 0x00307B70
+		private ChoreType Add(string id, string[] chore_groups, string urge, string[] interrupt_exclusion, string name, string status_message, string tooltip, bool skip_implicit_priority_change, int explicit_priority = -1, string report_name = null)
+		{
+			ListPool<Tag, ChoreTypes>.PooledList pooledList = ListPool<Tag, ChoreTypes>.Allocate();
+			for (int i = 0; i < interrupt_exclusion.Length; i++)
+			{
+				pooledList.Add(TagManager.Create(interrupt_exclusion[i]));
+			}
+			if (explicit_priority == -1)
+			{
+				explicit_priority = this.nextImplicitPriority;
+			}
+			ChoreType choreType = new ChoreType(id, this, chore_groups, urge, name, status_message, tooltip, pooledList, this.nextImplicitPriority, explicit_priority);
+			pooledList.Recycle();
+			if (!skip_implicit_priority_change)
+			{
+				this.nextImplicitPriority -= 50;
+			}
+			if (report_name != null)
+			{
+				choreType.reportName = report_name;
+			}
+			return choreType;
+		}
+
+		// Token: 0x06007C3F RID: 31807 RVA: 0x003099F0 File Offset: 0x00307BF0
+		public ChoreTypes(ResourceSet parent) : base("ChoreTypes", parent)
+		{
+			this.Die = this.Add("Die", new string[0], "", new string[0], DUPLICANTS.CHORES.DIE.NAME, DUPLICANTS.CHORES.DIE.STATUS, DUPLICANTS.CHORES.DIE.TOOLTIP, false, -1, null);
+			this.Entombed = this.Add("Entombed", new string[0], "", new string[0], DUPLICANTS.CHORES.ENTOMBED.NAME, DUPLICANTS.CHORES.ENTOMBED.STATUS, DUPLICANTS.CHORES.ENTOMBED.TOOLTIP, false, -1, null);
+			this.SuitMarker = this.Add("SuitMarker", new string[0], "", new string[0], DUPLICANTS.CHORES.WASHHANDS.NAME, DUPLICANTS.CHORES.WASHHANDS.STATUS, DUPLICANTS.CHORES.WASHHANDS.TOOLTIP, false, -1, null);
+			this.Slip = this.Add("Slip", new string[0], "", new string[0], DUPLICANTS.CHORES.SLIP.NAME, DUPLICANTS.CHORES.SLIP.STATUS, DUPLICANTS.CHORES.SLIP.TOOLTIP, false, -1, null);
+			this.Checkpoint = this.Add("Checkpoint", new string[0], "", new string[0], DUPLICANTS.CHORES.CHECKPOINT.NAME, DUPLICANTS.CHORES.CHECKPOINT.STATUS, DUPLICANTS.CHORES.CHECKPOINT.TOOLTIP, false, -1, null);
+			this.TravelTubeEntrance = this.Add("TravelTubeEntrance", new string[0], "", new string[0], DUPLICANTS.CHORES.TRAVELTUBEENTRANCE.NAME, DUPLICANTS.CHORES.TRAVELTUBEENTRANCE.STATUS, DUPLICANTS.CHORES.TRAVELTUBEENTRANCE.TOOLTIP, false, -1, null);
+			this.WashHands = this.Add("WashHands", new string[0], "", new string[0], DUPLICANTS.CHORES.WASHHANDS.NAME, DUPLICANTS.CHORES.WASHHANDS.STATUS, DUPLICANTS.CHORES.WASHHANDS.TOOLTIP, false, -1, null);
+			this.HealCritical = this.Add("HealCritical", new string[0], "HealCritical", new string[]
+			{
+				"Vomit",
+				"Cough",
+				"EmoteHighPriority"
+			}, DUPLICANTS.CHORES.HEAL.NAME, DUPLICANTS.CHORES.HEAL.STATUS, DUPLICANTS.CHORES.HEAL.TOOLTIP, false, -1, null);
+			this.BeIncapacitated = this.Add("BeIncapacitated", new string[0], "BeIncapacitated", new string[0], DUPLICANTS.CHORES.BEINCAPACITATED.NAME, DUPLICANTS.CHORES.BEINCAPACITATED.STATUS, DUPLICANTS.CHORES.BEINCAPACITATED.TOOLTIP, false, -1, null);
+			this.WaterDamageZap = this.Add("WaterDamageZap", new string[0], "EmoteHighPriority", new string[]
+			{
+				"MoveTo"
+			}, DUPLICANTS.CHORES.WATERDAMAGEZAP.NAME, DUPLICANTS.CHORES.WATERDAMAGEZAP.STATUS, DUPLICANTS.CHORES.WATERDAMAGEZAP.TOOLTIP, false, -1, null);
+			this.BeOffline = this.Add("BeOffline", new string[0], "BeOffline", new string[0], DUPLICANTS.CHORES.BEOFFLINE.NAME, DUPLICANTS.CHORES.BEOFFLINE.STATUS, DUPLICANTS.CHORES.BEOFFLINE.TOOLTIP, false, -1, null);
+			this.GeneShuffle = this.Add("GeneShuffle", new string[0], "", new string[0], DUPLICANTS.CHORES.GENESHUFFLE.NAME, DUPLICANTS.CHORES.GENESHUFFLE.STATUS, DUPLICANTS.CHORES.GENESHUFFLE.TOOLTIP, false, -1, null);
+			this.Migrate = this.Add("Migrate", new string[0], "", new string[0], DUPLICANTS.CHORES.MIGRATE.NAME, DUPLICANTS.CHORES.MIGRATE.STATUS, DUPLICANTS.CHORES.MIGRATE.TOOLTIP, false, -1, null);
+			this.DebugGoTo = this.Add("DebugGoTo", new string[0], "", new string[0], DUPLICANTS.CHORES.DEBUGGOTO.NAME, DUPLICANTS.CHORES.DEBUGGOTO.STATUS, DUPLICANTS.CHORES.MOVETO.TOOLTIP, false, -1, null);
+			this.MoveTo = this.Add("MoveTo", new string[0], "", new string[0], DUPLICANTS.CHORES.MOVETO.NAME, DUPLICANTS.CHORES.MOVETO.STATUS, DUPLICANTS.CHORES.MOVETO.TOOLTIP, false, -1, null);
+			this.RocketEnterExit = this.Add("RocketEnterExit", new string[0], "", new string[0], DUPLICANTS.CHORES.ROCKETENTEREXIT.NAME, DUPLICANTS.CHORES.ROCKETENTEREXIT.STATUS, DUPLICANTS.CHORES.ROCKETENTEREXIT.TOOLTIP, false, -1, null);
+			this.DropUnusedInventory = this.Add("DropUnusedInventory", new string[0], "", new string[0], DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.NAME, DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.STATUS, DUPLICANTS.CHORES.DROPUNUSEDINVENTORY.TOOLTIP, false, -1, null);
+			this.FindOxygenSourceItem_Critical = this.Add("FindOxygenSourceItem_Critical", new string[0], "FindOxygenRefill", new string[0], DUPLICANTS.CHORES.FINDOXYGENSOURCEITEM.NAME, DUPLICANTS.CHORES.FINDOXYGENSOURCEITEM.STATUS, DUPLICANTS.CHORES.FINDOXYGENSOURCEITEM.TOOLTIP, false, -1, null);
+			this.BionicAbsorbOxygen_Critical = this.Add("BionicAbsorbOxygen_Critical", new string[0], "FindOxygenRefill", new string[0], DUPLICANTS.CHORES.BIONICABSORBOXYGENCRITICAL.NAME, DUPLICANTS.CHORES.BIONICABSORBOXYGENCRITICAL.STATUS, DUPLICANTS.CHORES.BIONICABSORBOXYGENCRITICAL.TOOLTIP, false, -1, null);
+			this.ExpellGunk = this.Add("ExpellGunk", new string[0], "GunkPee", new string[0], DUPLICANTS.CHORES.EXPELLGUNK.NAME, DUPLICANTS.CHORES.EXPELLGUNK.STATUS, DUPLICANTS.CHORES.EXPELLGUNK.TOOLTIP, false, -1, null);
+			this.Pee = this.Add("Pee", new string[0], "Pee", new string[0], DUPLICANTS.CHORES.PEE.NAME, DUPLICANTS.CHORES.PEE.STATUS, DUPLICANTS.CHORES.PEE.TOOLTIP, false, -1, null);
+			this.RecoverBreath = this.Add("RecoverBreath", new string[0], "RecoverBreath", new string[0], DUPLICANTS.CHORES.RECOVERBREATH.NAME, DUPLICANTS.CHORES.RECOVERBREATH.STATUS, DUPLICANTS.CHORES.RECOVERBREATH.TOOLTIP, false, -1, null);
+			this.RecoverWarmth = this.Add("RecoverWarmth", new string[0], "", new string[0], DUPLICANTS.CHORES.RECOVERWARMTH.NAME, DUPLICANTS.CHORES.RECOVERWARMTH.STATUS, DUPLICANTS.CHORES.RECOVERWARMTH.TOOLTIP, false, -1, null);
+			this.RecoverFromHeat = this.Add("RecoverFromHeat", new string[0], "", new string[0], DUPLICANTS.CHORES.RECOVERFROMHEAT.NAME, DUPLICANTS.CHORES.RECOVERFROMHEAT.STATUS, DUPLICANTS.CHORES.RECOVERFROMHEAT.TOOLTIP, false, -1, null);
+			this.Flee = this.Add("Flee", new string[0], "", new string[0], DUPLICANTS.CHORES.FLEE.NAME, DUPLICANTS.CHORES.FLEE.STATUS, DUPLICANTS.CHORES.FLEE.TOOLTIP, false, -1, null);
+			this.MoveToQuarantine = this.Add("MoveToQuarantine", new string[0], "MoveToQuarantine", new string[0], DUPLICANTS.CHORES.MOVETOQUARANTINE.NAME, DUPLICANTS.CHORES.MOVETOQUARANTINE.STATUS, DUPLICANTS.CHORES.MOVETOQUARANTINE.TOOLTIP, false, -1, null);
+			this.EmoteIdle = this.Add("EmoteIdle", new string[0], "EmoteIdle", new string[0], DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.NAME, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.STATUS, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.TOOLTIP, false, -1, null);
+			this.Emote = this.Add("Emote", new string[0], "Emote", new string[0], DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.NAME, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.STATUS, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.TOOLTIP, false, -1, null);
+			this.EmoteHighPriority = this.Add("EmoteHighPriority", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.NAME, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.STATUS, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.TOOLTIP, false, -1, null);
+			this.StressEmote = this.Add("StressEmote", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.NAME, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.STATUS, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.TOOLTIP, false, -1, null);
+			this.Hug = this.Add("Hug", new string[0], "", new string[0], DUPLICANTS.CHORES.HUG.NAME, DUPLICANTS.CHORES.HUG.STATUS, DUPLICANTS.CHORES.HUG.TOOLTIP, false, -1, null);
+			this.StressVomit = this.Add("StressVomit", new string[0], "", new string[0], DUPLICANTS.CHORES.STRESSVOMIT.NAME, DUPLICANTS.CHORES.STRESSVOMIT.STATUS, DUPLICANTS.CHORES.STRESSVOMIT.TOOLTIP, false, -1, null);
+			this.UglyCry = this.Add("UglyCry", new string[0], "", new string[]
+			{
+				"MoveTo"
+			}, DUPLICANTS.CHORES.UGLY_CRY.NAME, DUPLICANTS.CHORES.UGLY_CRY.STATUS, DUPLICANTS.CHORES.UGLY_CRY.TOOLTIP, false, -1, null);
+			this.BansheeWail = this.Add("BansheeWail", new string[0], "", new string[]
+			{
+				"MoveTo"
+			}, DUPLICANTS.CHORES.BANSHEE_WAIL.NAME, DUPLICANTS.CHORES.BANSHEE_WAIL.STATUS, DUPLICANTS.CHORES.BANSHEE_WAIL.TOOLTIP, false, -1, null);
+			this.StressShock = this.Add("StressShock", new string[0], "", new string[]
+			{
+				"MoveTo"
+			}, DUPLICANTS.CHORES.STRESSSHOCK.NAME, DUPLICANTS.CHORES.STRESSSHOCK.STATUS, DUPLICANTS.CHORES.STRESSSHOCK.TOOLTIP, false, -1, null);
+			this.BingeEat = this.Add("BingeEat", new string[0], "", new string[]
+			{
+				"MoveTo"
+			}, DUPLICANTS.CHORES.BINGE_EAT.NAME, DUPLICANTS.CHORES.BINGE_EAT.STATUS, DUPLICANTS.CHORES.BINGE_EAT.TOOLTIP, false, -1, null);
+			this.StressActingOut = this.Add("StressActingOut", new string[0], "", new string[]
+			{
+				"MoveTo"
+			}, DUPLICANTS.CHORES.STRESSACTINGOUT.NAME, DUPLICANTS.CHORES.STRESSACTINGOUT.STATUS, DUPLICANTS.CHORES.STRESSACTINGOUT.TOOLTIP, false, -1, null);
+			this.Vomit = this.Add("Vomit", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.VOMIT.NAME, DUPLICANTS.CHORES.VOMIT.STATUS, DUPLICANTS.CHORES.VOMIT.TOOLTIP, false, -1, null);
+			this.Cough = this.Add("Cough", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.COUGH.NAME, DUPLICANTS.CHORES.COUGH.STATUS, DUPLICANTS.CHORES.COUGH.TOOLTIP, false, -1, null);
+			this.RadiationPain = this.Add("RadiationPain", new string[0], "EmoteHighPriority", new string[0], DUPLICANTS.CHORES.RADIATIONPAIN.NAME, DUPLICANTS.CHORES.RADIATIONPAIN.STATUS, DUPLICANTS.CHORES.RADIATIONPAIN.TOOLTIP, false, -1, null);
+			this.SwitchHat = this.Add("SwitchHat", new string[0], "", new string[0], DUPLICANTS.CHORES.LEARNSKILL.NAME, DUPLICANTS.CHORES.LEARNSKILL.STATUS, DUPLICANTS.CHORES.LEARNSKILL.TOOLTIP, false, -1, null);
+			this.StressIdle = this.Add("StressIdle", new string[0], "", new string[0], DUPLICANTS.CHORES.STRESSIDLE.NAME, DUPLICANTS.CHORES.STRESSIDLE.STATUS, DUPLICANTS.CHORES.STRESSIDLE.TOOLTIP, false, -1, null);
+			this.RescueIncapacitated = this.Add("RescueIncapacitated", new string[0], "", new string[0], DUPLICANTS.CHORES.RESCUEINCAPACITATED.NAME, DUPLICANTS.CHORES.RESCUEINCAPACITATED.STATUS, DUPLICANTS.CHORES.RESCUEINCAPACITATED.TOOLTIP, false, -1, null);
+			this.BreakPee = this.Add("BreakPee", new string[0], "Pee", new string[0], DUPLICANTS.CHORES.BREAK_PEE.NAME, DUPLICANTS.CHORES.BREAK_PEE.STATUS, DUPLICANTS.CHORES.BREAK_PEE.TOOLTIP, false, -1, null);
+			this.Eat = this.Add("Eat", new string[0], "Eat", new string[0], DUPLICANTS.CHORES.EAT.NAME, DUPLICANTS.CHORES.EAT.STATUS, DUPLICANTS.CHORES.EAT.TOOLTIP, false, -1, null);
+			this.ReloadElectrobank = this.Add("ReloadElectrobank", new string[0], "ReloadElectrobank", new string[0], DUPLICANTS.CHORES.RELOADELECTROBANK.NAME, DUPLICANTS.CHORES.RELOADELECTROBANK.STATUS, DUPLICANTS.CHORES.RELOADELECTROBANK.TOOLTIP, false, -1, null);
+			this.SeekAndInstallUpgrade = this.Add("SeekAndInstallUpgrade", new string[0], "", new string[0], DUPLICANTS.CHORES.SEEKANDINSTALLUPGRADE.NAME, DUPLICANTS.CHORES.SEEKANDINSTALLUPGRADE.STATUS, DUPLICANTS.CHORES.SEEKANDINSTALLUPGRADE.TOOLTIP, false, -1, null);
+			this.OilChange = this.Add("OilChange", new string[0], "OilRefill", new string[0], DUPLICANTS.CHORES.OILCHANGE.NAME, DUPLICANTS.CHORES.OILCHANGE.STATUS, DUPLICANTS.CHORES.OILCHANGE.TOOLTIP, false, -1, null);
+			this.SolidOilChange = this.Add("SolidOilChange", new string[0], "OilRefill", new string[0], DUPLICANTS.CHORES.OILCHANGE.NAME, DUPLICANTS.CHORES.OILCHANGE.STATUS, DUPLICANTS.CHORES.OILCHANGE.TOOLTIP, false, -1, null);
+			this.BionicAbsorbOxygen = this.Add("BionicAbsorbOxygen", new string[0], "FindOxygenRefill", new string[0], DUPLICANTS.CHORES.BIONICABSORBOXYGEN.NAME, DUPLICANTS.CHORES.BIONICABSORBOXYGEN.STATUS, DUPLICANTS.CHORES.BIONICABSORBOXYGEN.TOOLTIP, false, -1, null);
+			this.FindOxygenSourceItem = this.Add("FindOxygenCanister", new string[0], "FindOxygenRefill", new string[0], DUPLICANTS.CHORES.FINDOXYGENSOURCEITEM.NAME, DUPLICANTS.CHORES.FINDOXYGENSOURCEITEM.STATUS, DUPLICANTS.CHORES.FINDOXYGENSOURCEITEM.TOOLTIP, false, -1, null);
+			this.Narcolepsy = this.Add("Narcolepsy", new string[0], "Narcolepsy", new string[0], DUPLICANTS.CHORES.NARCOLEPSY.NAME, DUPLICANTS.CHORES.NARCOLEPSY.STATUS, DUPLICANTS.CHORES.NARCOLEPSY.TOOLTIP, false, -1, null);
+			this.ReturnSuitUrgent = this.Add("ReturnSuitUrgent", new string[0], "", new string[0], DUPLICANTS.CHORES.RETURNSUIT.NAME, DUPLICANTS.CHORES.RETURNSUIT.STATUS, DUPLICANTS.CHORES.RETURNSUIT.TOOLTIP, false, -1, null);
+			this.SleepDueToDisease = this.Add("SleepDueToDisease", new string[0], "Sleep", new string[]
+			{
+				"Vomit",
+				"Cough",
+				"EmoteHighPriority"
+			}, DUPLICANTS.CHORES.RESTDUETODISEASE.NAME, DUPLICANTS.CHORES.RESTDUETODISEASE.STATUS, DUPLICANTS.CHORES.RESTDUETODISEASE.TOOLTIP, false, -1, null);
+			this.BionicRestDueToDisease = this.Add("BionicRestDueToDisease", new string[0], "Heal", new string[]
+			{
+				"Vomit",
+				"Cough",
+				"EmoteHighPriority"
+			}, DUPLICANTS.CHORES.RESTDUETODISEASE.NAME, DUPLICANTS.CHORES.RESTDUETODISEASE.STATUS, DUPLICANTS.CHORES.RESTDUETODISEASE.TOOLTIP, false, -1, null);
+			this.Sleep = this.Add("Sleep", new string[0], "Sleep", new string[0], DUPLICANTS.CHORES.SLEEP.NAME, DUPLICANTS.CHORES.SLEEP.STATUS, DUPLICANTS.CHORES.SLEEP.TOOLTIP, false, -1, null);
+			this.TakeMedicine = this.Add("TakeMedicine", new string[0], "", new string[0], DUPLICANTS.CHORES.TAKEMEDICINE.NAME, DUPLICANTS.CHORES.TAKEMEDICINE.STATUS, DUPLICANTS.CHORES.TAKEMEDICINE.TOOLTIP, false, -1, null);
+			this.GetDoctored = this.Add("GetDoctored", new string[0], "", new string[0], DUPLICANTS.CHORES.GETDOCTORED.NAME, DUPLICANTS.CHORES.GETDOCTORED.STATUS, DUPLICANTS.CHORES.GETDOCTORED.TOOLTIP, false, -1, null);
+			this.RestDueToDisease = this.Add("RestDueToDisease", new string[0], "RestDueToDisease", new string[]
+			{
+				"Vomit",
+				"Cough",
+				"EmoteHighPriority"
+			}, DUPLICANTS.CHORES.RESTDUETODISEASE.NAME, DUPLICANTS.CHORES.RESTDUETODISEASE.STATUS, DUPLICANTS.CHORES.RESTDUETODISEASE.TOOLTIP, false, -1, null);
+			this.BionicBedtimeMode = this.Add("BionicBedtimeMode", new string[0], "", new string[0], DUPLICANTS.CHORES.BIONICBEDTIMEMODE.NAME, DUPLICANTS.CHORES.BIONICBEDTIMEMODE.STATUS, DUPLICANTS.CHORES.BIONICBEDTIMEMODE.TOOLTIP, false, -1, null);
+			this.ScrubOre = this.Add("ScrubOre", new string[0], "", new string[0], DUPLICANTS.CHORES.SCRUBORE.NAME, DUPLICANTS.CHORES.SCRUBORE.STATUS, DUPLICANTS.CHORES.SCRUBORE.TOOLTIP, false, -1, null);
+			this.DeliverFood = this.Add("DeliverFood", new string[0], "", new string[0], DUPLICANTS.CHORES.DELIVERFOOD.NAME, DUPLICANTS.CHORES.DELIVERFOOD.STATUS, DUPLICANTS.CHORES.DELIVERFOOD.TOOLTIP, false, -1, null);
+			this.Sigh = this.Add("Sigh", new string[0], "Emote", new string[0], DUPLICANTS.CHORES.SIGH.NAME, DUPLICANTS.CHORES.SIGH.STATUS, DUPLICANTS.CHORES.SIGH.TOOLTIP, false, -1, null);
+			this.Heal = this.Add("Heal", new string[0], "Heal", new string[]
+			{
+				"Vomit",
+				"Cough",
+				"EmoteHighPriority"
+			}, DUPLICANTS.CHORES.HEAL.NAME, DUPLICANTS.CHORES.HEAL.STATUS, DUPLICANTS.CHORES.HEAL.TOOLTIP, false, -1, null);
+			this.Shower = this.Add("Shower", new string[0], "Shower", new string[0], DUPLICANTS.CHORES.SHOWER.NAME, DUPLICANTS.CHORES.SHOWER.STATUS, DUPLICANTS.CHORES.SHOWER.TOOLTIP, false, -1, null);
+			this.LearnSkill = this.Add("LearnSkill", new string[0], "LearnSkill", new string[0], DUPLICANTS.CHORES.LEARNSKILL.NAME, DUPLICANTS.CHORES.LEARNSKILL.STATUS, DUPLICANTS.CHORES.LEARNSKILL.TOOLTIP, false, -1, null);
+			this.UnlearnSkill = this.Add("UnlearnSkill", new string[0], "", new string[0], DUPLICANTS.CHORES.UNLEARNSKILL.NAME, DUPLICANTS.CHORES.UNLEARNSKILL.STATUS, DUPLICANTS.CHORES.UNLEARNSKILL.TOOLTIP, false, -1, null);
+			this.Equip = this.Add("Equip", new string[0], "", new string[0], DUPLICANTS.CHORES.EQUIP.NAME, DUPLICANTS.CHORES.EQUIP.STATUS, DUPLICANTS.CHORES.EQUIP.TOOLTIP, false, -1, null);
+			this.JoyReaction = this.Add("JoyReaction", new string[0], "", new string[0], DUPLICANTS.CHORES.JOYREACTION.NAME, DUPLICANTS.CHORES.JOYREACTION.STATUS, DUPLICANTS.CHORES.JOYREACTION.TOOLTIP, false, -1, null);
+			this.RocketControl = this.Add("RocketControl", new string[]
+			{
+				"Rocketry"
+			}, "", new string[0], DUPLICANTS.CHORES.ROCKETCONTROL.NAME, DUPLICANTS.CHORES.ROCKETCONTROL.STATUS, DUPLICANTS.CHORES.ROCKETCONTROL.TOOLTIP, false, -1, null);
+			this.Fart = this.Add("Fart", new string[0], "Fart", new string[0], DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.NAME, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.STATUS, DUPLICANTS.CHORES.EMOTEHIGHPRIORITY.TOOLTIP, false, -1, null);
+			this.StressHeal = this.Add("StressHeal", new string[0], "", new string[]
+			{
+				""
+			}, DUPLICANTS.CHORES.STRESSHEAL.NAME, DUPLICANTS.CHORES.STRESSHEAL.STATUS, DUPLICANTS.CHORES.STRESSHEAL.TOOLTIP, false, -1, null);
+			this.Party = this.Add("Party", new string[0], "", new string[0], DUPLICANTS.CHORES.PARTY.NAME, DUPLICANTS.CHORES.PARTY.STATUS, DUPLICANTS.CHORES.PARTY.TOOLTIP, false, -1, null);
+			this.Relax = this.Add("Relax", new string[]
+			{
+				"Recreation"
+			}, "", new string[]
+			{
+				"Sleep"
+			}, DUPLICANTS.CHORES.RELAX.NAME, DUPLICANTS.CHORES.RELAX.STATUS, DUPLICANTS.CHORES.RELAX.TOOLTIP, false, -1, null);
+			this.Recharge = this.Add("Recharge", new string[0], "", new string[0], DUPLICANTS.CHORES.RECHARGE.NAME, DUPLICANTS.CHORES.RECHARGE.STATUS, DUPLICANTS.CHORES.RECHARGE.TOOLTIP, false, -1, null);
+			this.Unequip = this.Add("Unequip", new string[0], "", new string[0], DUPLICANTS.CHORES.UNEQUIP.NAME, DUPLICANTS.CHORES.UNEQUIP.STATUS, DUPLICANTS.CHORES.UNEQUIP.TOOLTIP, false, -1, null);
+			this.Mourn = this.Add("Mourn", new string[0], "", new string[0], DUPLICANTS.CHORES.MOURN.NAME, DUPLICANTS.CHORES.MOURN.STATUS, DUPLICANTS.CHORES.MOURN.TOOLTIP, false, -1, null);
+			this.TopPriority = this.Add("TopPriority", new string[0], "", new string[0], "", "", "", false, -1, null);
+			this.Attack = this.Add("Attack", new string[]
+			{
+				"Combat"
+			}, "", new string[0], DUPLICANTS.CHORES.ATTACK.NAME, DUPLICANTS.CHORES.ATTACK.STATUS, DUPLICANTS.CHORES.ATTACK.TOOLTIP, false, 5000, null);
+			this.Doctor = this.Add("DoctorChore", new string[]
+			{
+				"MedicalAid"
+			}, "Doctor", new string[0], DUPLICANTS.CHORES.DOCTOR.NAME, DUPLICANTS.CHORES.DOCTOR.STATUS, DUPLICANTS.CHORES.DOCTOR.TOOLTIP, false, 5000, null);
+			this.Toggle = this.Add("Toggle", new string[]
+			{
+				"Toggle"
+			}, "", new string[0], DUPLICANTS.CHORES.TOGGLE.NAME, DUPLICANTS.CHORES.TOGGLE.STATUS, DUPLICANTS.CHORES.TOGGLE.TOOLTIP, true, 5000, null);
+			this.Capture = this.Add("Capture", new string[]
+			{
+				"Ranching"
+			}, "", new string[0], DUPLICANTS.CHORES.CAPTURE.NAME, DUPLICANTS.CHORES.CAPTURE.STATUS, DUPLICANTS.CHORES.CAPTURE.TOOLTIP, false, 5000, null);
+			this.CreatureFetch = this.Add("CreatureFetch", new string[]
+			{
+				"Ranching"
+			}, "", new string[0], DUPLICANTS.CHORES.FETCHCREATURE.NAME, DUPLICANTS.CHORES.FETCHCREATURE.STATUS, DUPLICANTS.CHORES.FETCHCREATURE.TOOLTIP, false, 5000, null);
+			this.RanchingFetch = this.Add("RanchingFetch", new string[]
+			{
+				"Ranching",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.FETCHRANCHING.NAME, DUPLICANTS.CHORES.FETCHRANCHING.STATUS, DUPLICANTS.CHORES.FETCHRANCHING.TOOLTIP, false, 5000, null);
+			this.EggSing = this.Add("EggSing", new string[]
+			{
+				"Ranching"
+			}, "", new string[0], DUPLICANTS.CHORES.SINGTOEGG.NAME, DUPLICANTS.CHORES.SINGTOEGG.STATUS, DUPLICANTS.CHORES.SINGTOEGG.TOOLTIP, false, 5000, null);
+			this.Astronaut = this.Add("Astronaut", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.ASTRONAUT.NAME, DUPLICANTS.CHORES.ASTRONAUT.STATUS, DUPLICANTS.CHORES.ASTRONAUT.TOOLTIP, false, 5000, null);
+			this.FetchCritical = this.Add("FetchCritical", new string[]
+			{
+				"Hauling",
+				"LifeSupport"
+			}, "", new string[0], DUPLICANTS.CHORES.FETCHCRITICAL.NAME, DUPLICANTS.CHORES.FETCHCRITICAL.STATUS, DUPLICANTS.CHORES.FETCHCRITICAL.TOOLTIP, false, 5000, DUPLICANTS.CHORES.FETCHCRITICAL.REPORT_NAME);
+			this.Art = this.Add("Art", new string[]
+			{
+				"Art"
+			}, "", new string[0], DUPLICANTS.CHORES.ART.NAME, DUPLICANTS.CHORES.ART.STATUS, DUPLICANTS.CHORES.ART.TOOLTIP, false, 5000, null);
+			this.EmptyStorage = this.Add("EmptyStorage", new string[]
+			{
+				"Basekeeping",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.EMPTYSTORAGE.NAME, DUPLICANTS.CHORES.EMPTYSTORAGE.STATUS, DUPLICANTS.CHORES.EMPTYSTORAGE.TOOLTIP, false, 5000, null);
+			this.Mop = this.Add("Mop", new string[]
+			{
+				"Basekeeping"
+			}, "", new string[0], DUPLICANTS.CHORES.MOP.NAME, DUPLICANTS.CHORES.MOP.STATUS, DUPLICANTS.CHORES.MOP.TOOLTIP, true, 5000, null);
+			this.Relocate = this.Add("Relocate", new string[0], "", new string[0], DUPLICANTS.CHORES.RELOCATE.NAME, DUPLICANTS.CHORES.RELOCATE.STATUS, DUPLICANTS.CHORES.RELOCATE.TOOLTIP, true, 5000, null);
+			this.Disinfect = this.Add("Disinfect", new string[]
+			{
+				"Basekeeping"
+			}, "", new string[0], DUPLICANTS.CHORES.DISINFECT.NAME, DUPLICANTS.CHORES.DISINFECT.STATUS, DUPLICANTS.CHORES.DISINFECT.TOOLTIP, true, 5000, null);
+			this.Repair = this.Add("Repair", new string[]
+			{
+				"Basekeeping"
+			}, "", new string[0], DUPLICANTS.CHORES.REPAIR.NAME, DUPLICANTS.CHORES.REPAIR.STATUS, DUPLICANTS.CHORES.REPAIR.TOOLTIP, false, 5000, null);
+			this.RepairFetch = this.Add("RepairFetch", new string[]
+			{
+				"Basekeeping",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.REPAIRFETCH.NAME, DUPLICANTS.CHORES.REPAIRFETCH.STATUS, DUPLICANTS.CHORES.REPAIRFETCH.TOOLTIP, false, 5000, null);
+			this.Deconstruct = this.Add("Deconstruct", new string[]
+			{
+				"Build"
+			}, "", new string[0], DUPLICANTS.CHORES.DECONSTRUCT.NAME, DUPLICANTS.CHORES.DECONSTRUCT.STATUS, DUPLICANTS.CHORES.DECONSTRUCT.TOOLTIP, false, 5000, null);
+			this.Demolish = this.Add("Demolish", new string[]
+			{
+				"Build"
+			}, "", new string[0], DUPLICANTS.CHORES.DEMOLISH.NAME, DUPLICANTS.CHORES.DEMOLISH.STATUS, DUPLICANTS.CHORES.DEMOLISH.TOOLTIP, false, 5000, null);
+			this.Research = this.Add("Research", new string[]
+			{
+				"Research"
+			}, "", new string[0], DUPLICANTS.CHORES.RESEARCH.NAME, DUPLICANTS.CHORES.RESEARCH.STATUS, DUPLICANTS.CHORES.RESEARCH.TOOLTIP, false, 5000, null);
+			this.AnalyzeArtifact = this.Add("AnalyzeArtifact", new string[]
+			{
+				"Research",
+				"Art"
+			}, "", new string[0], DUPLICANTS.CHORES.ANALYZEARTIFACT.NAME, DUPLICANTS.CHORES.ANALYZEARTIFACT.STATUS, DUPLICANTS.CHORES.ANALYZEARTIFACT.TOOLTIP, false, 5000, null);
+			this.AnalyzeSeed = this.Add("AnalyzeSeed", new string[]
+			{
+				"Research",
+				"Farming"
+			}, "", new string[0], DUPLICANTS.CHORES.ANALYZESEED.NAME, DUPLICANTS.CHORES.ANALYZESEED.STATUS, DUPLICANTS.CHORES.ANALYZESEED.TOOLTIP, false, 5000, null);
+			this.ExcavateFossil = this.Add("ExcavateFossil", new string[]
+			{
+				"Research",
+				"Art",
+				"Dig"
+			}, "", new string[0], DUPLICANTS.CHORES.EXCAVATEFOSSIL.NAME, DUPLICANTS.CHORES.EXCAVATEFOSSIL.STATUS, DUPLICANTS.CHORES.EXCAVATEFOSSIL.TOOLTIP, false, 5000, null);
+			this.ResearchFetch = this.Add("ResearchFetch", new string[]
+			{
+				"Research",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.RESEARCHFETCH.NAME, DUPLICANTS.CHORES.RESEARCHFETCH.STATUS, DUPLICANTS.CHORES.RESEARCHFETCH.TOOLTIP, false, 5000, null);
+			this.GeneratePower = this.Add("GeneratePower", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[]
+			{
+				"StressHeal"
+			}, DUPLICANTS.CHORES.GENERATEPOWER.NAME, DUPLICANTS.CHORES.GENERATEPOWER.STATUS, DUPLICANTS.CHORES.GENERATEPOWER.TOOLTIP, false, 5000, null);
+			this.CropTend = this.Add("CropTend", new string[]
+			{
+				"Farming"
+			}, "", new string[0], DUPLICANTS.CHORES.CROP_TEND.NAME, DUPLICANTS.CHORES.CROP_TEND.STATUS, DUPLICANTS.CHORES.CROP_TEND.TOOLTIP, false, 5000, null);
+			this.PowerTinker = this.Add("PowerTinker", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.POWER_TINKER.NAME, DUPLICANTS.CHORES.POWER_TINKER.STATUS, DUPLICANTS.CHORES.POWER_TINKER.TOOLTIP, false, 5000, null);
+			this.RemoteOperate = this.Add("RemoteOperate", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.REMOTEWORK.NAME, DUPLICANTS.CHORES.REMOTEWORK.STATUS, DUPLICANTS.CHORES.REMOTEWORK.TOOLTIP, false, 5000, null);
+			this.MachineTinker = this.Add("MachineTinker", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.POWER_TINKER.NAME, DUPLICANTS.CHORES.POWER_TINKER.STATUS, DUPLICANTS.CHORES.POWER_TINKER.TOOLTIP, false, 5000, null);
+			this.MachineFetch = this.Add("MachineFetch", new string[]
+			{
+				"MachineOperating",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.MACHINEFETCH.NAME, DUPLICANTS.CHORES.MACHINEFETCH.STATUS, DUPLICANTS.CHORES.MACHINEFETCH.TOOLTIP, false, 5000, DUPLICANTS.CHORES.MACHINEFETCH.REPORT_NAME);
+			this.Harvest = this.Add("Harvest", new string[]
+			{
+				"Farming"
+			}, "", new string[0], DUPLICANTS.CHORES.HARVEST.NAME, DUPLICANTS.CHORES.HARVEST.STATUS, DUPLICANTS.CHORES.HARVEST.TOOLTIP, false, 5000, null);
+			this.FarmFetch = this.Add("FarmFetch", new string[]
+			{
+				"Farming",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.FARMFETCH.NAME, DUPLICANTS.CHORES.FARMFETCH.STATUS, DUPLICANTS.CHORES.FARMFETCH.TOOLTIP, false, 5000, null);
+			this.Uproot = this.Add("Uproot", new string[]
+			{
+				"Farming"
+			}, "", new string[0], DUPLICANTS.CHORES.UPROOT.NAME, DUPLICANTS.CHORES.UPROOT.STATUS, DUPLICANTS.CHORES.UPROOT.TOOLTIP, false, 5000, null);
+			this.CleanToilet = this.Add("CleanToilet", new string[]
+			{
+				"Basekeeping"
+			}, "", new string[0], DUPLICANTS.CHORES.CLEANTOILET.NAME, DUPLICANTS.CHORES.CLEANTOILET.STATUS, DUPLICANTS.CHORES.CLEANTOILET.TOOLTIP, false, 5000, null);
+			this.EmptyDesalinator = this.Add("EmptyDesalinator", new string[]
+			{
+				"Basekeeping"
+			}, "", new string[0], DUPLICANTS.CHORES.EMPTYDESALINATOR.NAME, DUPLICANTS.CHORES.EMPTYDESALINATOR.STATUS, DUPLICANTS.CHORES.EMPTYDESALINATOR.TOOLTIP, false, 5000, null);
+			this.LiquidCooledFan = this.Add("LiquidCooledFan", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.LIQUIDCOOLEDFAN.NAME, DUPLICANTS.CHORES.LIQUIDCOOLEDFAN.STATUS, DUPLICANTS.CHORES.LIQUIDCOOLEDFAN.TOOLTIP, false, 5000, null);
+			this.IceCooledFan = this.Add("IceCooledFan", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.ICECOOLEDFAN.NAME, DUPLICANTS.CHORES.ICECOOLEDFAN.STATUS, DUPLICANTS.CHORES.ICECOOLEDFAN.TOOLTIP, false, 5000, null);
+			this.Train = this.Add("Train", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.TRAIN.NAME, DUPLICANTS.CHORES.TRAIN.STATUS, DUPLICANTS.CHORES.TRAIN.TOOLTIP, false, 5000, null);
+			this.ProcessCritter = this.Add("ProcessCritter", new string[]
+			{
+				"Ranching"
+			}, "", new string[0], DUPLICANTS.CHORES.PROCESSCRITTER.NAME, DUPLICANTS.CHORES.PROCESSCRITTER.STATUS, DUPLICANTS.CHORES.PROCESSCRITTER.TOOLTIP, false, 5000, null);
+			this.Cook = this.Add("Cook", new string[]
+			{
+				"Cook"
+			}, "", new string[0], DUPLICANTS.CHORES.COOK.NAME, DUPLICANTS.CHORES.COOK.STATUS, DUPLICANTS.CHORES.COOK.TOOLTIP, false, 5000, null);
+			this.CookFetch = this.Add("CookFetch", new string[]
+			{
+				"Cook",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.COOKFETCH.NAME, DUPLICANTS.CHORES.COOKFETCH.STATUS, DUPLICANTS.CHORES.COOKFETCH.TOOLTIP, false, 5000, null);
+			this.DoctorFetch = this.Add("DoctorFetch", new string[]
+			{
+				"MedicalAid",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.DOCTORFETCH.NAME, DUPLICANTS.CHORES.DOCTORFETCH.STATUS, DUPLICANTS.CHORES.DOCTORFETCH.TOOLTIP, false, 5000, DUPLICANTS.CHORES.DOCTORFETCH.REPORT_NAME);
+			this.Ranch = this.Add("Ranch", new string[]
+			{
+				"Ranching"
+			}, "", new string[0], DUPLICANTS.CHORES.RANCH.NAME, DUPLICANTS.CHORES.RANCH.STATUS, DUPLICANTS.CHORES.RANCH.TOOLTIP, false, 5000, null);
+			this.PowerFetch = this.Add("PowerFetch", new string[]
+			{
+				"MachineOperating",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.POWERFETCH.NAME, DUPLICANTS.CHORES.POWERFETCH.STATUS, DUPLICANTS.CHORES.POWERFETCH.TOOLTIP, false, 5000, DUPLICANTS.CHORES.POWERFETCH.REPORT_NAME);
+			this.FlipCompost = this.Add("FlipCompost", new string[]
+			{
+				"Farming"
+			}, "", new string[0], DUPLICANTS.CHORES.FLIPCOMPOST.NAME, DUPLICANTS.CHORES.FLIPCOMPOST.STATUS, DUPLICANTS.CHORES.FLIPCOMPOST.TOOLTIP, false, 5000, null);
+			this.Depressurize = this.Add("Depressurize", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.DEPRESSURIZE.NAME, DUPLICANTS.CHORES.DEPRESSURIZE.STATUS, DUPLICANTS.CHORES.DEPRESSURIZE.TOOLTIP, false, 5000, null);
+			this.FarmingFabricate = this.Add("FarmingFabricate", new string[]
+			{
+				"Farming"
+			}, "", new string[0], DUPLICANTS.CHORES.FABRICATE.NAME, DUPLICANTS.CHORES.FABRICATE.STATUS, DUPLICANTS.CHORES.FABRICATE.TOOLTIP, false, 5000, null);
+			this.PowerFabricate = this.Add("PowerFabricate", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.FABRICATE.NAME, DUPLICANTS.CHORES.FABRICATE.STATUS, DUPLICANTS.CHORES.FABRICATE.TOOLTIP, false, 5000, null);
+			this.Compound = this.Add("Compound", new string[]
+			{
+				"MedicalAid"
+			}, "", new string[0], DUPLICANTS.CHORES.COMPOUND.NAME, DUPLICANTS.CHORES.COMPOUND.STATUS, DUPLICANTS.CHORES.COMPOUND.TOOLTIP, false, 5000, null);
+			this.Fabricate = this.Add("Fabricate", new string[]
+			{
+				"MachineOperating"
+			}, "", new string[0], DUPLICANTS.CHORES.FABRICATE.NAME, DUPLICANTS.CHORES.FABRICATE.STATUS, DUPLICANTS.CHORES.FABRICATE.TOOLTIP, false, 5000, null);
+			this.FabricateFetch = this.Add("FabricateFetch", new string[]
+			{
+				"MachineOperating",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.FABRICATEFETCH.NAME, DUPLICANTS.CHORES.FABRICATEFETCH.STATUS, DUPLICANTS.CHORES.FABRICATEFETCH.TOOLTIP, false, 5000, DUPLICANTS.CHORES.FABRICATEFETCH.REPORT_NAME);
+			this.FoodFetch = this.Add("FoodFetch", new string[]
+			{
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.FOODFETCH.NAME, DUPLICANTS.CHORES.FOODFETCH.STATUS, DUPLICANTS.CHORES.FOODFETCH.TOOLTIP, false, 5000, DUPLICANTS.CHORES.FOODFETCH.REPORT_NAME);
+			this.Transport = this.Add("Transport", new string[]
+			{
+				"Hauling",
+				"Basekeeping"
+			}, "", new string[0], DUPLICANTS.CHORES.TRANSPORT.NAME, DUPLICANTS.CHORES.TRANSPORT.STATUS, DUPLICANTS.CHORES.TRANSPORT.TOOLTIP, true, 5000, null);
+			this.Build = this.Add("Build", new string[]
+			{
+				"Build"
+			}, "", new string[0], DUPLICANTS.CHORES.BUILD.NAME, DUPLICANTS.CHORES.BUILD.STATUS, DUPLICANTS.CHORES.BUILD.TOOLTIP, true, 5000, null);
+			this.BuildDig = this.Add("BuildDig", new string[]
+			{
+				"Build",
+				"Dig"
+			}, "", new string[0], DUPLICANTS.CHORES.BUILDDIG.NAME, DUPLICANTS.CHORES.BUILDDIG.STATUS, DUPLICANTS.CHORES.BUILDDIG.TOOLTIP, true, 5000, null);
+			this.BuildUproot = this.Add("BuildUproot", new string[]
+			{
+				"Build",
+				"Farming"
+			}, "", new string[0], DUPLICANTS.CHORES.BUILDUPROOT.NAME, DUPLICANTS.CHORES.BUILDUPROOT.STATUS, DUPLICANTS.CHORES.BUILDUPROOT.TOOLTIP, true, 5000, null);
+			this.BuildFetch = this.Add("BuildFetch", new string[]
+			{
+				"Build",
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.BUILDFETCH.NAME, DUPLICANTS.CHORES.BUILDFETCH.STATUS, DUPLICANTS.CHORES.BUILDFETCH.TOOLTIP, true, 5000, null);
+			this.Dig = this.Add("Dig", new string[]
+			{
+				"Dig"
+			}, "", new string[0], DUPLICANTS.CHORES.DIG.NAME, DUPLICANTS.CHORES.DIG.STATUS, DUPLICANTS.CHORES.DIG.TOOLTIP, false, 5000, null);
+			this.Fetch = this.Add("Fetch", new string[]
+			{
+				"Storage"
+			}, "", new string[0], DUPLICANTS.CHORES.FETCH.NAME, DUPLICANTS.CHORES.FETCH.STATUS, DUPLICANTS.CHORES.FETCH.TOOLTIP, false, 5000, DUPLICANTS.CHORES.FETCH.REPORT_NAME);
+			this.StorageFetch = this.Add("StorageFetch", new string[]
+			{
+				"Storage"
+			}, "", new string[0], DUPLICANTS.CHORES.STORAGEFETCH.NAME, DUPLICANTS.CHORES.STORAGEFETCH.STATUS, DUPLICANTS.CHORES.STORAGEFETCH.TOOLTIP, true, 5000, DUPLICANTS.CHORES.STORAGEFETCH.REPORT_NAME);
+			this.EquipmentFetch = this.Add("EquipmentFetch", new string[]
+			{
+				"Hauling"
+			}, "", new string[0], DUPLICANTS.CHORES.EQUIPMENTFETCH.NAME, DUPLICANTS.CHORES.EQUIPMENTFETCH.STATUS, DUPLICANTS.CHORES.EQUIPMENTFETCH.TOOLTIP, false, 5000, DUPLICANTS.CHORES.EQUIPMENTFETCH.REPORT_NAME);
+			this.ArmTrap = this.Add("ArmTrap", new string[]
+			{
+				"Ranching"
+			}, "", new string[0], DUPLICANTS.CHORES.ARMTRAP.NAME, DUPLICANTS.CHORES.ARMTRAP.STATUS, DUPLICANTS.CHORES.ARMTRAP.TOOLTIP, false, -1, null);
+			this.MoveToSafety = this.Add("MoveToSafety", new string[0], "MoveToSafety", new string[0], DUPLICANTS.CHORES.MOVETOSAFETY.NAME, DUPLICANTS.CHORES.MOVETOSAFETY.STATUS, DUPLICANTS.CHORES.MOVETOSAFETY.TOOLTIP, false, -1, null);
+			this.ReturnSuitIdle = this.Add("ReturnSuitIdle", new string[0], "", new string[0], DUPLICANTS.CHORES.RETURNSUIT.NAME, DUPLICANTS.CHORES.RETURNSUIT.STATUS, DUPLICANTS.CHORES.RETURNSUIT.TOOLTIP, false, -1, null);
+			this.Idle = this.Add("IdleChore", new string[0], "", new string[0], DUPLICANTS.CHORES.IDLE.NAME, DUPLICANTS.CHORES.IDLE.STATUS, DUPLICANTS.CHORES.IDLE.TOOLTIP, false, -1, null);
+			ChoreType[][] array = new ChoreType[][]
+			{
+				new ChoreType[]
+				{
+					this.Die
+				},
+				new ChoreType[]
+				{
+					this.Entombed
+				},
+				new ChoreType[]
+				{
+					this.HealCritical
+				},
+				new ChoreType[]
+				{
+					this.BeIncapacitated,
+					this.GeneShuffle,
+					this.Migrate
+				},
+				new ChoreType[]
+				{
+					this.BeOffline
+				},
+				new ChoreType[]
+				{
+					this.DebugGoTo
+				},
+				new ChoreType[]
+				{
+					this.StressVomit
+				},
+				new ChoreType[]
+				{
+					this.MoveTo,
+					this.RocketEnterExit
+				},
+				new ChoreType[]
+				{
+					this.RecoverBreath,
+					this.FindOxygenSourceItem_Critical,
+					this.BionicAbsorbOxygen_Critical
+				},
+				new ChoreType[]
+				{
+					this.ReturnSuitUrgent
+				},
+				new ChoreType[]
+				{
+					this.UglyCry
+				},
+				new ChoreType[]
+				{
+					this.BingeEat,
+					this.BansheeWail,
+					this.StressShock
+				},
+				new ChoreType[]
+				{
+					this.WaterDamageZap
+				},
+				new ChoreType[]
+				{
+					this.ExpellGunk
+				},
+				new ChoreType[]
+				{
+					this.EmoteHighPriority,
+					this.StressActingOut,
+					this.Vomit,
+					this.Cough,
+					this.Pee,
+					this.StressIdle,
+					this.RescueIncapacitated,
+					this.SwitchHat,
+					this.RadiationPain,
+					this.OilChange,
+					this.SolidOilChange
+				},
+				new ChoreType[]
+				{
+					this.MoveToQuarantine
+				},
+				new ChoreType[]
+				{
+					this.TopPriority
+				},
+				new ChoreType[]
+				{
+					this.RocketControl
+				},
+				new ChoreType[]
+				{
+					this.Attack
+				},
+				new ChoreType[]
+				{
+					this.Flee
+				},
+				new ChoreType[]
+				{
+					this.LearnSkill,
+					this.UnlearnSkill,
+					this.Eat,
+					this.ReloadElectrobank,
+					this.BreakPee
+				},
+				new ChoreType[]
+				{
+					this.FindOxygenSourceItem,
+					this.BionicAbsorbOxygen
+				},
+				new ChoreType[]
+				{
+					this.TakeMedicine
+				},
+				new ChoreType[]
+				{
+					this.Heal,
+					this.SleepDueToDisease,
+					this.RestDueToDisease,
+					this.BionicRestDueToDisease
+				},
+				new ChoreType[]
+				{
+					this.Sleep,
+					this.BionicBedtimeMode,
+					this.Narcolepsy
+				},
+				new ChoreType[]
+				{
+					this.Doctor,
+					this.GetDoctored
+				},
+				new ChoreType[]
+				{
+					this.Emote,
+					this.Hug,
+					this.Fart
+				},
+				new ChoreType[]
+				{
+					this.Mourn
+				},
+				new ChoreType[]
+				{
+					this.StressHeal
+				},
+				new ChoreType[]
+				{
+					this.JoyReaction
+				},
+				new ChoreType[]
+				{
+					this.Party
+				},
+				new ChoreType[]
+				{
+					this.Relax
+				},
+				new ChoreType[]
+				{
+					this.Equip,
+					this.Unequip,
+					this.SeekAndInstallUpgrade
+				},
+				new ChoreType[]
+				{
+					this.DeliverFood,
+					this.Sigh,
+					this.EmptyStorage,
+					this.Repair,
+					this.Disinfect,
+					this.Shower,
+					this.CleanToilet,
+					this.LiquidCooledFan,
+					this.IceCooledFan,
+					this.SuitMarker,
+					this.Checkpoint,
+					this.Slip,
+					this.TravelTubeEntrance,
+					this.WashHands,
+					this.Recharge,
+					this.ScrubOre,
+					this.Ranch,
+					this.MoveToSafety,
+					this.Relocate,
+					this.Research,
+					this.Mop,
+					this.Toggle,
+					this.Deconstruct,
+					this.Demolish,
+					this.Capture,
+					this.EggSing,
+					this.Art,
+					this.GeneratePower,
+					this.CropTend,
+					this.PowerTinker,
+					this.MachineTinker,
+					this.DropUnusedInventory,
+					this.Harvest,
+					this.Uproot,
+					this.FarmingFabricate,
+					this.PowerFabricate,
+					this.Compound,
+					this.Fabricate,
+					this.Train,
+					this.ProcessCritter,
+					this.Cook,
+					this.Build,
+					this.Dig,
+					this.BuildDig,
+					this.BuildUproot,
+					this.FlipCompost,
+					this.Depressurize,
+					this.StressEmote,
+					this.Astronaut,
+					this.EmptyDesalinator,
+					this.ArmTrap,
+					this.FetchCritical,
+					this.ResearchFetch,
+					this.ExcavateFossil,
+					this.AnalyzeArtifact,
+					this.AnalyzeSeed,
+					this.CreatureFetch,
+					this.RanchingFetch,
+					this.Fetch,
+					this.Transport,
+					this.FarmFetch,
+					this.BuildFetch,
+					this.CookFetch,
+					this.DoctorFetch,
+					this.MachineFetch,
+					this.PowerFetch,
+					this.FabricateFetch,
+					this.FoodFetch,
+					this.StorageFetch,
+					this.RepairFetch,
+					this.EquipmentFetch,
+					this.RemoteOperate
+				},
+				new ChoreType[]
+				{
+					this.RecoverWarmth,
+					this.RecoverFromHeat
+				},
+				new ChoreType[]
+				{
+					this.ReturnSuitIdle,
+					this.EmoteIdle
+				},
+				new ChoreType[]
+				{
+					this.Idle
+				}
+			};
+			string text = "";
+			int num = 100000;
+			foreach (ChoreType[] array3 in array)
+			{
+				foreach (ChoreType choreType in array3)
+				{
+					if (choreType.interruptPriority != 0)
+					{
+						text = text + "Interrupt priority set more than once: " + choreType.Id;
+					}
+					choreType.interruptPriority = num;
+				}
+				num -= 100;
+			}
+			if (!string.IsNullOrEmpty(text))
+			{
+				Debug.LogError(text);
+			}
+			string text2 = "";
+			foreach (ChoreType choreType2 in this.resources)
+			{
+				if (choreType2.interruptPriority == 0)
+				{
+					text2 = text2 + "Interrupt priority missing for: " + choreType2.Id + "\n";
+				}
+			}
+			if (!string.IsNullOrEmpty(text2))
+			{
+				Debug.LogError(text2);
+			}
+		}
+
+		// Token: 0x04005851 RID: 22609
+		public ChoreType Attack;
+
+		// Token: 0x04005852 RID: 22610
+		public ChoreType Capture;
+
+		// Token: 0x04005853 RID: 22611
+		public ChoreType Flee;
+
+		// Token: 0x04005854 RID: 22612
+		public ChoreType BeIncapacitated;
+
+		// Token: 0x04005855 RID: 22613
+		public ChoreType BeOffline;
+
+		// Token: 0x04005856 RID: 22614
+		public ChoreType BionicBedtimeMode;
+
+		// Token: 0x04005857 RID: 22615
+		public ChoreType DebugGoTo;
+
+		// Token: 0x04005858 RID: 22616
+		public ChoreType DeliverFood;
+
+		// Token: 0x04005859 RID: 22617
+		public ChoreType Die;
+
+		// Token: 0x0400585A RID: 22618
+		public ChoreType GeneShuffle;
+
+		// Token: 0x0400585B RID: 22619
+		public ChoreType Doctor;
+
+		// Token: 0x0400585C RID: 22620
+		public ChoreType WashHands;
+
+		// Token: 0x0400585D RID: 22621
+		public ChoreType Shower;
+
+		// Token: 0x0400585E RID: 22622
+		public ChoreType Eat;
+
+		// Token: 0x0400585F RID: 22623
+		public ChoreType ReloadElectrobank;
+
+		// Token: 0x04005860 RID: 22624
+		public ChoreType FindOxygenSourceItem;
+
+		// Token: 0x04005861 RID: 22625
+		public ChoreType FindOxygenSourceItem_Critical;
+
+		// Token: 0x04005862 RID: 22626
+		public ChoreType BionicAbsorbOxygen;
+
+		// Token: 0x04005863 RID: 22627
+		public ChoreType BionicAbsorbOxygen_Critical;
+
+		// Token: 0x04005864 RID: 22628
+		public ChoreType SeekAndInstallUpgrade;
+
+		// Token: 0x04005865 RID: 22629
+		public ChoreType Entombed;
+
+		// Token: 0x04005866 RID: 22630
+		public ChoreType Idle;
+
+		// Token: 0x04005867 RID: 22631
+		public ChoreType MoveToQuarantine;
+
+		// Token: 0x04005868 RID: 22632
+		public ChoreType RescueIncapacitated;
+
+		// Token: 0x04005869 RID: 22633
+		public ChoreType RecoverBreath;
+
+		// Token: 0x0400586A RID: 22634
+		public ChoreType RecoverWarmth;
+
+		// Token: 0x0400586B RID: 22635
+		public ChoreType RecoverFromHeat;
+
+		// Token: 0x0400586C RID: 22636
+		public ChoreType Sigh;
+
+		// Token: 0x0400586D RID: 22637
+		public ChoreType Sleep;
+
+		// Token: 0x0400586E RID: 22638
+		public ChoreType Narcolepsy;
+
+		// Token: 0x0400586F RID: 22639
+		public ChoreType Vomit;
+
+		// Token: 0x04005870 RID: 22640
+		public ChoreType WaterDamageZap;
+
+		// Token: 0x04005871 RID: 22641
+		public ChoreType Cough;
+
+		// Token: 0x04005872 RID: 22642
+		public ChoreType Pee;
+
+		// Token: 0x04005873 RID: 22643
+		public ChoreType ExpellGunk;
+
+		// Token: 0x04005874 RID: 22644
+		public ChoreType BreakPee;
+
+		// Token: 0x04005875 RID: 22645
+		public ChoreType TakeMedicine;
+
+		// Token: 0x04005876 RID: 22646
+		public ChoreType GetDoctored;
+
+		// Token: 0x04005877 RID: 22647
+		public ChoreType RestDueToDisease;
+
+		// Token: 0x04005878 RID: 22648
+		public ChoreType BionicRestDueToDisease;
+
+		// Token: 0x04005879 RID: 22649
+		public ChoreType SleepDueToDisease;
+
+		// Token: 0x0400587A RID: 22650
+		public ChoreType Heal;
+
+		// Token: 0x0400587B RID: 22651
+		public ChoreType HealCritical;
+
+		// Token: 0x0400587C RID: 22652
+		public ChoreType EmoteIdle;
+
+		// Token: 0x0400587D RID: 22653
+		public ChoreType Emote;
+
+		// Token: 0x0400587E RID: 22654
+		public ChoreType EmoteHighPriority;
+
+		// Token: 0x0400587F RID: 22655
+		public ChoreType StressEmote;
+
+		// Token: 0x04005880 RID: 22656
+		public ChoreType StressActingOut;
+
+		// Token: 0x04005881 RID: 22657
+		public ChoreType Relax;
+
+		// Token: 0x04005882 RID: 22658
+		public ChoreType RadiationPain;
+
+		// Token: 0x04005883 RID: 22659
+		public ChoreType StressHeal;
+
+		// Token: 0x04005884 RID: 22660
+		public ChoreType MoveToSafety;
+
+		// Token: 0x04005885 RID: 22661
+		public ChoreType Equip;
+
+		// Token: 0x04005886 RID: 22662
+		public ChoreType Recharge;
+
+		// Token: 0x04005887 RID: 22663
+		public ChoreType Unequip;
+
+		// Token: 0x04005888 RID: 22664
+		public ChoreType Warmup;
+
+		// Token: 0x04005889 RID: 22665
+		public ChoreType Cooldown;
+
+		// Token: 0x0400588A RID: 22666
+		public ChoreType Mop;
+
+		// Token: 0x0400588B RID: 22667
+		public ChoreType Relocate;
+
+		// Token: 0x0400588C RID: 22668
+		public ChoreType Toggle;
+
+		// Token: 0x0400588D RID: 22669
+		public ChoreType Mourn;
+
+		// Token: 0x0400588E RID: 22670
+		public ChoreType Migrate;
+
+		// Token: 0x0400588F RID: 22671
+		public ChoreType Fetch;
+
+		// Token: 0x04005890 RID: 22672
+		public ChoreType FetchCritical;
+
+		// Token: 0x04005891 RID: 22673
+		public ChoreType StorageFetch;
+
+		// Token: 0x04005892 RID: 22674
+		public ChoreType Transport;
+
+		// Token: 0x04005893 RID: 22675
+		public ChoreType RepairFetch;
+
+		// Token: 0x04005894 RID: 22676
+		public ChoreType MachineFetch;
+
+		// Token: 0x04005895 RID: 22677
+		public ChoreType ResearchFetch;
+
+		// Token: 0x04005896 RID: 22678
+		public ChoreType FarmFetch;
+
+		// Token: 0x04005897 RID: 22679
+		public ChoreType FabricateFetch;
+
+		// Token: 0x04005898 RID: 22680
+		public ChoreType CookFetch;
+
+		// Token: 0x04005899 RID: 22681
+		public ChoreType PowerFetch;
+
+		// Token: 0x0400589A RID: 22682
+		public ChoreType BuildFetch;
+
+		// Token: 0x0400589B RID: 22683
+		public ChoreType CreatureFetch;
+
+		// Token: 0x0400589C RID: 22684
+		public ChoreType RanchingFetch;
+
+		// Token: 0x0400589D RID: 22685
+		public ChoreType FoodFetch;
+
+		// Token: 0x0400589E RID: 22686
+		public ChoreType DoctorFetch;
+
+		// Token: 0x0400589F RID: 22687
+		public ChoreType EquipmentFetch;
+
+		// Token: 0x040058A0 RID: 22688
+		public ChoreType ArmTrap;
+
+		// Token: 0x040058A1 RID: 22689
+		public ChoreType Research;
+
+		// Token: 0x040058A2 RID: 22690
+		public ChoreType AnalyzeArtifact;
+
+		// Token: 0x040058A3 RID: 22691
+		public ChoreType AnalyzeSeed;
+
+		// Token: 0x040058A4 RID: 22692
+		public ChoreType ExcavateFossil;
+
+		// Token: 0x040058A5 RID: 22693
+		public ChoreType Disinfect;
+
+		// Token: 0x040058A6 RID: 22694
+		public ChoreType Repair;
+
+		// Token: 0x040058A7 RID: 22695
+		public ChoreType EmptyStorage;
+
+		// Token: 0x040058A8 RID: 22696
+		public ChoreType Deconstruct;
+
+		// Token: 0x040058A9 RID: 22697
+		public ChoreType Demolish;
+
+		// Token: 0x040058AA RID: 22698
+		public ChoreType Art;
+
+		// Token: 0x040058AB RID: 22699
+		public ChoreType GeneratePower;
+
+		// Token: 0x040058AC RID: 22700
+		public ChoreType Harvest;
+
+		// Token: 0x040058AD RID: 22701
+		public ChoreType Uproot;
+
+		// Token: 0x040058AE RID: 22702
+		public ChoreType CleanToilet;
+
+		// Token: 0x040058AF RID: 22703
+		public ChoreType EmptyDesalinator;
+
+		// Token: 0x040058B0 RID: 22704
+		public ChoreType LiquidCooledFan;
+
+		// Token: 0x040058B1 RID: 22705
+		public ChoreType IceCooledFan;
+
+		// Token: 0x040058B2 RID: 22706
+		public ChoreType CompostWorkable;
+
+		// Token: 0x040058B3 RID: 22707
+		public ChoreType Fabricate;
+
+		// Token: 0x040058B4 RID: 22708
+		public ChoreType FarmingFabricate;
+
+		// Token: 0x040058B5 RID: 22709
+		public ChoreType PowerFabricate;
+
+		// Token: 0x040058B6 RID: 22710
+		public ChoreType Compound;
+
+		// Token: 0x040058B7 RID: 22711
+		public ChoreType Cook;
+
+		// Token: 0x040058B8 RID: 22712
+		public ChoreType ProcessCritter;
+
+		// Token: 0x040058B9 RID: 22713
+		public ChoreType Train;
+
+		// Token: 0x040058BA RID: 22714
+		public ChoreType Ranch;
+
+		// Token: 0x040058BB RID: 22715
+		public ChoreType Build;
+
+		// Token: 0x040058BC RID: 22716
+		public ChoreType BuildDig;
+
+		// Token: 0x040058BD RID: 22717
+		public ChoreType BuildUproot;
+
+		// Token: 0x040058BE RID: 22718
+		public ChoreType Dig;
+
+		// Token: 0x040058BF RID: 22719
+		public ChoreType FlipCompost;
+
+		// Token: 0x040058C0 RID: 22720
+		public ChoreType PowerTinker;
+
+		// Token: 0x040058C1 RID: 22721
+		public ChoreType RemoteOperate;
+
+		// Token: 0x040058C2 RID: 22722
+		public ChoreType MachineTinker;
+
+		// Token: 0x040058C3 RID: 22723
+		public ChoreType CropTend;
+
+		// Token: 0x040058C4 RID: 22724
+		public ChoreType Depressurize;
+
+		// Token: 0x040058C5 RID: 22725
+		public ChoreType DropUnusedInventory;
+
+		// Token: 0x040058C6 RID: 22726
+		public ChoreType StressVomit;
+
+		// Token: 0x040058C7 RID: 22727
+		public ChoreType MoveTo;
+
+		// Token: 0x040058C8 RID: 22728
+		public ChoreType RocketEnterExit;
+
+		// Token: 0x040058C9 RID: 22729
+		public ChoreType UglyCry;
+
+		// Token: 0x040058CA RID: 22730
+		public ChoreType BansheeWail;
+
+		// Token: 0x040058CB RID: 22731
+		public ChoreType StressShock;
+
+		// Token: 0x040058CC RID: 22732
+		public ChoreType BingeEat;
+
+		// Token: 0x040058CD RID: 22733
+		public ChoreType StressIdle;
+
+		// Token: 0x040058CE RID: 22734
+		public ChoreType ScrubOre;
+
+		// Token: 0x040058CF RID: 22735
+		public ChoreType SuitMarker;
+
+		// Token: 0x040058D0 RID: 22736
+		public ChoreType Slip;
+
+		// Token: 0x040058D1 RID: 22737
+		public ChoreType ReturnSuitUrgent;
+
+		// Token: 0x040058D2 RID: 22738
+		public ChoreType ReturnSuitIdle;
+
+		// Token: 0x040058D3 RID: 22739
+		public ChoreType Checkpoint;
+
+		// Token: 0x040058D4 RID: 22740
+		public ChoreType TravelTubeEntrance;
+
+		// Token: 0x040058D5 RID: 22741
+		public ChoreType LearnSkill;
+
+		// Token: 0x040058D6 RID: 22742
+		public ChoreType UnlearnSkill;
+
+		// Token: 0x040058D7 RID: 22743
+		public ChoreType SwitchHat;
+
+		// Token: 0x040058D8 RID: 22744
+		public ChoreType EggSing;
+
+		// Token: 0x040058D9 RID: 22745
+		public ChoreType Astronaut;
+
+		// Token: 0x040058DA RID: 22746
+		public ChoreType TopPriority;
+
+		// Token: 0x040058DB RID: 22747
+		public ChoreType JoyReaction;
+
+		// Token: 0x040058DC RID: 22748
+		public ChoreType RocketControl;
+
+		// Token: 0x040058DD RID: 22749
+		public ChoreType Party;
+
+		// Token: 0x040058DE RID: 22750
+		public ChoreType Hug;
+
+		// Token: 0x040058DF RID: 22751
+		public ChoreType OilChange;
+
+		// Token: 0x040058E0 RID: 22752
+		public ChoreType SolidOilChange;
+
+		// Token: 0x040058E1 RID: 22753
+		public ChoreType Fart;
+
+		// Token: 0x040058E2 RID: 22754
+		private int nextImplicitPriority = 10000;
+
+		// Token: 0x040058E3 RID: 22755
+		private const int INVALID_PRIORITY = -1;
+	}
+}

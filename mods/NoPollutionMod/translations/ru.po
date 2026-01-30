@@ -1,0 +1,232 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: NoPollutionMod\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Application: Oxygen Not Included\n"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.VICTORY_HEADER
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.VICTORY_HEADER"
+msgid "Victory"
+msgstr "Победа"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.CLEAR_CHALLENGE_TITLE
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.CLEAR_CHALLENGE_TITLE"
+msgid "Challenge"
+msgstr "Челлендж"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.CLEAR_CHALLENGE_BODY
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.CLEAR_CHALLENGE_BODY"
+msgid "Clear completion mark for: {0}?"
+msgstr "Удалить запись о завершении челленджа: {0}?"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.BUILDING_BLOCKED_TITLE
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.BUILDING_BLOCKED_TITLE"
+msgid "No Pollution"
+msgstr "Нет загрязнению"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.BUILDING_BLOCKED_BODY
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.BUILDING_BLOCKED_BODY"
+msgid "You selected the \"{0}\" challenge.\nYou cannot use this building."
+msgstr "Вы выбрали челлендж \"{0}\".\nВы не можете использовать эту постройку."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_OPTIONS_HEADER
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_OPTIONS_HEADER"
+msgid "No Pollution — settings"
+msgstr "Нет загрязнению — настройки"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_MODE_LABEL
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_MODE_LABEL"
+msgid "Debug mode"
+msgstr "Режим отладки"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_MODE_TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_MODE_TOOLTIP"
+msgid "Enables mod debug mode"
+msgstr "Включает debug режим мода"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_MODE_ENABLED
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_MODE_ENABLED"
+msgid "Enabled"
+msgstr "Включено"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_MODE_DISABLED
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_MODE_DISABLED"
+msgid "Disabled"
+msgstr "Выключено"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_WIN_BUTTON
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_WIN_BUTTON"
+msgid "WIN"
+msgstr "ПОБЕДА"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_ACHIEVEMENTS_BUTTON
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.DEBUG_ACHIEVEMENTS_BUTTON"
+msgid "ACHIEVS"
+msgstr "ДОСТИЖЕНИЯ"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_TITLE
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_TITLE"
+msgid "No Pollution Mod"
+msgstr "No Pollution Mod"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_BODY
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_BODY"
+msgid "Mod loaded.\n(This is a test message)"
+msgstr "Мод загружен.\n(это тестовое сообщение)"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NAME
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NAME"
+msgid "Challenge"
+msgstr "Челлендж"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.TOOLTIP"
+msgid "Select a challenge for this world."
+msgstr "Выбор челленджа для мира."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.UNKNOWN_ASTEROID
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.UNKNOWN_ASTEROID"
+msgid "Unknown asteroid"
+msgstr "Неизвестный астероид"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.COMPLETION_CYCLE
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.COMPLETION_CYCLE"
+msgid "Cycle: {0}"
+msgstr "Цикл: {0}"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.COMPLETION_CYCLE_UNKNOWN
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.COMPLETION_CYCLE_UNKNOWN"
+msgid "Cycle: ?"
+msgstr "Цикл: ?"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.ALL_ACHIEVEMENTS_REMAINING_CYCLES
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.ALL_ACHIEVEMENTS_REMAINING_CYCLES"
+msgid "Remaining cycles: {0}"
+msgstr "Осталось циклов: {0}"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NO_TOILETS_STATUS.NAME
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NO_TOILETS_STATUS.NAME"
+msgid "Out of Order (No Toilets Challenge)"
+msgstr "Выведен из строя (челендж без туалетов)"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NO_TOILETS_STATUS.TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NO_TOILETS_STATUS.TOOLTIP"
+msgid "Disabled by the 'No Toilets' challenge."
+msgstr "Отключено челленджем «Без туалетов»"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.COMPLETION_FALLBACK
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.COMPLETION_FALLBACK"
+msgid "Challenge completed: {0}"
+msgstr "Челлендж выполнен: {0}"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NONE.NAME
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NONE.NAME"
+msgid "None"
+msgstr "Пусто"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NONE.TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NONE.TOOLTIP"
+msgid "Challenge disabled."
+msgstr "Челлендж выключен."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_POLLUTION.NAME
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_POLLUTION.NAME"
+msgid "No Pollution"
+msgstr "Нет загрязнению"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_POLLUTION.TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_POLLUTION.TOOLTIP"
+msgid "No polluting production allowed.\nIncludes: coal/gas/petroleum generators, farm stations, fertilizers,\ndiamond press, smokehouse, CO2 scrubber, electrolyzer, deoxidizers,\nsublimation station, deodorizer, rocket fabrication, jet suit dock,\npower control station, genetic analysis station.\nIn DLC1, Drillcone and biodiesel engine are also forbidden."
+msgstr "Запрещено строительство источников загрязнения и нефтепереработки.\nВключая: угольные/газовые/нефтяные генераторы, фермерские станции, удобрения,\nалмазный пресс, коптильню, скраббер CO2, электролизёр, деоксидизеры,\nсублимационную станцию, дезодоратор, производство ракет, док джет-костюма,\nстанцию управления питанием, генетический анализатор.\nВ DLC1 также запрещены Drillcone и биодизельный двигатель."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_POLLUTION.START
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_POLLUTION.START"
+msgid "Challenge active: no polluting production.\nKeep the colony clean and efficient."
+msgstr "Челлендж активен: без загрязняющего производства.\nСохраняйте колонию чистой и эффективной."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_POLLUTION.COMPLETION
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_POLLUTION.COMPLETION"
+msgid "The colony proved it can live cleanly.\nNo smoke, no grime, no heavy emissions — only discipline and care.\nWell done, Administrator!"
+msgstr "Колония доказала, что может жить чисто.\nБез дыма, без грязи, без тяжёлых выбросов — только ум, дисциплина и аккуратность.\nТак держать, руководитель!"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_TOILETS.NAME
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_TOILETS.NAME"
+msgid "No Toilets"
+msgstr "Никаких туалетов"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_TOILETS.TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_TOILETS.TOOLTIP"
+msgid "No toilets allowed.\nFind other ways to keep the colony hygienic."
+msgstr "Запрещены любые туалеты.\nИщите другие способы поддерживать гигиену."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_TOILETS.START
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_TOILETS.START"
+msgid "Challenge active: no toilets.\nKeep hygiene through ingenuity and careful planning."
+msgstr "Челлендж активен: без туалетов.\nСохраняйте гигиену через смекалку и планирование."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_TOILETS.COMPLETION
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.NO_TOILETS.COMPLETION"
+msgid "The colony endured without a single toilet.\nDiscipline and ingenuity carried the day."
+msgstr "Колония выстояла без единого туалета.\nДисциплина и изобретательность сделали своё дело."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ONE_DUPLICANT.NAME
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ONE_DUPLICANT.NAME"
+msgid "Only One Duplicant"
+msgstr "Только 1 дубликант"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ONE_DUPLICANT.TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ONE_DUPLICANT.TOOLTIP"
+msgid "Printing Pod and Mini-Pod will never offer duplicants.\nFrozen Friend cannot be defrosted.\nBionic duplicants are disabled."
+msgstr "Printing Pod и Mini-Pod не предлагают дубликантов.\nFrozen Friend нельзя разморозить.\nБионические дубликанты отключены."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ONE_DUPLICANT.START
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ONE_DUPLICANT.START"
+msgid "Challenge active: only one duplicant.\nEvery decision counts when you're alone."
+msgstr "Челлендж активен: только один дубликант.\nКаждое решение важно, когда ты один."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ONE_DUPLICANT.COMPLETION
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ONE_DUPLICANT.COMPLETION"
+msgid "One duplicant stood alone and still built a thriving colony."
+msgstr "Один дубликант в одиночку построил процветающую колонию."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.NAME
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.NAME"
+msgid "All Achievements"
+msgstr "Все достижения"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.TOOLTIP"
+msgid "Earn every colony achievement within 800 cycles.\nOnly achievements valid for this asteroid count."
+msgstr "Получите все достижения колонии за 800 циклов.\nУчитываются только достижения, доступные на этом астероиде."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.START
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.START"
+msgid "Challenge active: all achievements.\nEarn every colony achievement within 800 cycles."
+msgstr "Челлендж активен: все достижения.\nПолучите все достижения колонии за 800 циклов."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.COMPLETION
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.COMPLETION"
+msgid "Every achievement earned.\nThe colony's legend is complete."
+msgstr "Все достижения получены.\nЛегенда колонии завершена."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.FAILURE
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.LEVELS.ALL_ACHIEVEMENTS.FAILURE"
+msgid "The cycle limit has passed.\nNot every achievement was secured in time."
+msgstr "Лимит циклов исчерпан.\nНе все достижения удалось получить вовремя."
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.DUPLICANTS.MODIFIERS.NOPOLLUTION_POLLUTED.NAME
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.DUPLICANTS.MODIFIERS.NOPOLLUTION_POLLUTED.NAME"
+msgid "Polluted surroundings (No Pollution)"
+msgstr "Загрязненное окружение (Нет загрязнению)"
+
+#. SlavaMorozov.NoPollutionMod.STRINGS.DUPLICANTS.MODIFIERS.NOPOLLUTION_POLLUTED.TOOLTIP
+msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.DUPLICANTS.MODIFIERS.NOPOLLUTION_POLLUTED.TOOLTIP"
+msgid "Duplicant is in a room with forbidden buildings. Stress: +100%/cycle."
+msgstr "Дубликант находится в комнате с запрещенными постройками. Стресс: +100%/цикл."
