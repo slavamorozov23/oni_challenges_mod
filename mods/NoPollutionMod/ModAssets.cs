@@ -5,6 +5,10 @@ namespace SlavaMorozov.NoPollutionMod
 {
     internal static class ModAssets
     {
+        private static string ModRootPath;
+        private static readonly System.Collections.Generic.Dictionary<string, Sprite> ChallengeMedalSprites =
+            new System.Collections.Generic.Dictionary<string, Sprite>();
+
         internal static Sprite LogoSprite { get; private set; }
         internal static Sprite ShadowSprite { get; private set; }
         internal static Sprite DefaultMedalSprite { get; private set; }
@@ -19,10 +23,13 @@ namespace SlavaMorozov.NoPollutionMod
                 return;
             }
 
+            ModRootPath = modRootPath;
+            ChallengeMedalSprites.Clear();
+
             LogoSprite = TryLoadSprite(modRootPath, "logo.png");
             ShadowSprite = TryLoadSprite(modRootPath, "shadow.png");
             DefaultMedalSprite = TryLoadSprite(modRootPath, "medal_default.png");
-            NoPollutionMedalSprite = TryLoadSprite(modRootPath, "medal_no_pollution.png");
+            NoPollutionMedalSprite = TryLoadSprite(modRootPath, "medal_NoPollution.png");
             PlaceholderSprite = TryLoadSprite(modRootPath, "placeholder.png");
 
             if (DefaultMedalSprite == null)
@@ -48,6 +55,27 @@ namespace SlavaMorozov.NoPollutionMod
 
         internal static Sprite GetChallengeMedalSprite(string challengeId)
         {
+            if (!string.IsNullOrWhiteSpace(challengeId))
+            {
+                if (ChallengeMedalSprites.TryGetValue(challengeId, out var cached) && cached != null)
+                {
+                    return cached;
+                }
+
+                if (!string.IsNullOrWhiteSpace(ModRootPath))
+                {
+                    var fileName = $"medal_{challengeId}.png";
+                    var sprite = TryLoadSprite(ModRootPath, fileName);
+                    if (sprite != null)
+                    {
+                        ChallengeMedalSprites[challengeId] = sprite;
+                        return sprite;
+                    }
+
+                    ChallengeMedalSprites[challengeId] = null;
+                }
+            }
+
             if (challengeId == ChallengeSettings.LevelNoPollution && NoPollutionMedalSprite != null)
             {
                 return NoPollutionMedalSprite;

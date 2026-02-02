@@ -96,6 +96,9 @@ namespace SlavaMorozov.NoPollutionMod
             icon.name = ChallengeIconName;
             icon.GetComponent<Image>().sprite = sprite;
             icon.GetComponent<ToolTip>().SetSimpleTooltip(ChallengeSettings.GetChallengeName(levelId));
+
+            var hover = icon.AddComponent<MainMenuMedalHoverHandler>();
+            hover.Initialize(icon.GetComponent<Image>(), ChallengeSettings.GetChallengeName(levelId));
         }
     }
 }

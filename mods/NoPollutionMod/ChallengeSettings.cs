@@ -208,10 +208,10 @@ namespace SlavaMorozov.NoPollutionMod
 
             var key = GetCompletionKey(challengeId);
             KPlayerPrefs.SetInt(key, 1);
-            var asteroidName = GetCurrentAsteroidName();
-            if (!string.IsNullOrEmpty(asteroidName))
+            var asteroidKey = GetCurrentAsteroidKey();
+            if (!string.IsNullOrEmpty(asteroidKey))
             {
-                KPlayerPrefs.SetString(GetCompletionAsteroidKey(challengeId), asteroidName);
+                KPlayerPrefs.SetString(GetCompletionAsteroidKey(challengeId), asteroidKey);
             }
             KPlayerPrefs.SetInt(GetCompletionCycleKey(challengeId), GameUtil.GetCurrentCycle());
             KPlayerPrefs.Save();
@@ -239,7 +239,7 @@ namespace SlavaMorozov.NoPollutionMod
             var cycle = KPlayerPrefs.GetInt(GetCompletionCycleKey(challengeId), 0);
             var asteroidLine = string.IsNullOrEmpty(asteroidName)
                 ? ModStrings.NO_POLLUTION_CHALLENGE.UNKNOWN_ASTEROID.ToString()
-                : asteroidName;
+                : Strings.Get(asteroidName);
             var cycleLine = cycle > 0
                 ? string.Format(ModStrings.NO_POLLUTION_CHALLENGE.COMPLETION_CYCLE.ToString(), cycle)
                 : ModStrings.NO_POLLUTION_CHALLENGE.COMPLETION_CYCLE_UNKNOWN.ToString();
@@ -366,6 +366,10 @@ namespace SlavaMorozov.NoPollutionMod
             }
 
             asteroidName = KPlayerPrefs.GetString(GetCompletionAsteroidKey(challengeId), string.Empty);
+            if (!string.IsNullOrEmpty(asteroidName))
+            {
+                asteroidName = Strings.Get(asteroidName);
+            }
             cycle = KPlayerPrefs.GetInt(GetCompletionCycleKey(challengeId), 0);
             return !string.IsNullOrEmpty(asteroidName) && cycle > 0;
         }
@@ -440,7 +444,7 @@ namespace SlavaMorozov.NoPollutionMod
             return CompletionCycleKeyPrefix + challengeId;
         }
 
-        private static string GetCurrentAsteroidName()
+        private static string GetCurrentAsteroidKey()
         {
             var cluster = ClusterManager.Instance;
             if (cluster == null)
@@ -456,12 +460,12 @@ namespace SlavaMorozov.NoPollutionMod
 
             if (!string.IsNullOrEmpty(world.worldType))
             {
-                return Strings.Get(world.worldType);
+                return world.worldType;
             }
 
             if (!string.IsNullOrEmpty(world.worldName))
             {
-                return Strings.Get(world.worldName);
+                return world.worldName;
             }
 
             return string.Empty;

@@ -19,7 +19,7 @@ namespace SlavaMorozov.NoPollutionMod
             public static LocString DEBUG_WIN_BUTTON = "WIN";
             public static LocString DEBUG_ACHIEVEMENTS_BUTTON = "ACHIEVS";
             public static LocString MOD_LOADED_TITLE = "No Pollution Mod [UPDATED]";
-            public static LocString MOD_LOADED_BODY = ">>> worktree: bf08d221 <<<";
+            public static LocString MOD_LOADED_BODY = "worktree f3588faa";
         }
     }
 }

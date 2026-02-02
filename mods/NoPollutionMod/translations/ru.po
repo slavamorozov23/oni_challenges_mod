@@ -78,8 +78,8 @@ msgstr "No Pollution Mod [UPDATED]"
 
 #. SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_BODY
 msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.UI.MOD_LOADED_BODY"
-msgid ">>> worktree: bf08d221 <<<"
-msgstr ">>> worktree: bf08d221 <<<"
+msgid "worktree f3588faa"
+msgstr "worktree f3588faa"
 
 #. SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NAME
 msgctxt "SlavaMorozov.NoPollutionMod.STRINGS.NO_POLLUTION_CHALLENGE.NAME"
